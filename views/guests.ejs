@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head", { title: locals.title }) %>
+  <body>
+    <h1><%= locals.h1Title %></h1>
+    <%- include("./partials/navbar", { navbar: locals.navbar }) %>
+    <main>
+      <section>
+        <form id="form--guests" method="post">
+          <div>
+            <label for="fname">First Name
+              <input type="text" id="fname" name="guest_fname" />
+            </label>
+            <label for="lname">Last Name
+              <input type="text" id="lname" name="guest_lname" />
+            </label>
+          </div>
+          <div>
+            <input id="btn--reset" type="reset" disabled />
+            <input id="btn--submit" type="submit" value="Add" disabled />
+            <input id="btn--delete" type="button" value="Delete" disabled />
+          </div>
+        </form>
+      </section>
+      <section>
+        <div>
+          <% if (Array.isArray(locals.data) && locals.data.length) { %>
+          <ul id="list--guests">
+            <% locals.data.forEach(({ guest_id, guest_fname, guest_lname }) => { %>
+            <li id="guest-<%= guest_id %>"><%= `${guest_fname} ${guest_lname}`%></li>
+            <% }) %>
+          </ul>
+          <% } else { %>
+          <p>There is no data</p>
+          <% } %>
+        </div>
+      </section>
+    </main>
+    <script src="../scripts/guests.js"></script>
+  </body>
+</html>
