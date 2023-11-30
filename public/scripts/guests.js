@@ -39,7 +39,6 @@ const setInputValue = (target, ...args) => {
   console.log(dataArr);
   args.forEach((item, index) => {
     item.value = dataArr[index];
-    console.log(`value: "${item.value}"`);
   });
 };
 

@@ -24,7 +24,7 @@
       </section>
       <section>
         <div>
-          <% if (Array.isArray(locals.data) && locals.data.length) { %>
+          <% if (locals.data.length) { %>
           <ul id="list--guests">
             <% locals.data.forEach(({ guest_id, guest_fname, guest_lname }) => { %>
             <li id="guest-<%= guest_id %>"><%= `${guest_fname} ${guest_lname}`%></li>
