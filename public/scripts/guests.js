@@ -5,9 +5,18 @@ const {
   "btn--reset": btnReset,
   "btn--submit": btnSubmit,
   "btn--delete": btnDelete,
-  fname,
-  lname,
 } = form;
+const inputArr = [
+  form.fname,
+  form.lname,
+  form.dob,
+  form.email,
+  form.phone,
+  form.street,
+  form.city,
+  form.province,
+  form.postal_code,
+];
 
 // Define a function to set initial state of the buttons
 const setInitialBtnState = () => {
@@ -35,7 +44,9 @@ const setBtnState = (...args) => {
 
 // Define a function to set inputs value using the target element's value
 const setInputValue = (target, ...args) => {
-  const dataArr = target.textContent.split(" ");
+  const targetArr = target.textContent.split(", ");
+  const dataArr = [...targetArr[0].split(" "), ...targetArr.slice(1)];
+
   console.log(dataArr);
   args.forEach((item, index) => {
     item.value = dataArr[index];
@@ -50,12 +61,12 @@ const handleClick = (event) => {
 
   btnSubmit.value = "Update";
 
-  setInputValue(target, fname, lname);
-  setBtnState(fname, lname);
+  setInputValue(target, ...inputArr);
+  setBtnState(...inputArr);
 };
 
 // Define a function to handle "input" event
-const handleInput = () => setBtnState(fname, lname);
+const handleInput = () => setBtnState(...inputArr);
 
 // Define a function to handle "reset" event
 const handleReset = () => setInitialBtnState();

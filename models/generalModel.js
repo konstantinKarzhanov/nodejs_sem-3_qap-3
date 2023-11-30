@@ -4,7 +4,10 @@ const pool = require("../config/pgPool");
 // Define a function to get data from specified table
 const getData = async (table, orderByColumn, orderByOrder, limit) => {
   try {
-    const query = `SELECT * FROM ${table} ORDER BY ${orderByColumn} ${orderByOrder} LIMIT ${limit}`;
+    const query = {
+      text: `SELECT * FROM ${table} ORDER BY ${orderByColumn} ${orderByOrder} LIMIT ${limit}`,
+      rowMode: "array",
+    };
     const result = await pool.query(query);
 
     return result.rows;
