@@ -4,7 +4,7 @@ const express = require("express");
 // Import required functions/variables from custom modules
 const { navbarGuestsArr } = require("../config/defaults");
 const {
-  getAllGuests,
+  getGuests,
   getGuestUsingId,
   addGuest,
 } = require("../controllers/guestsController");
@@ -15,7 +15,7 @@ const guestsRouter = express.Router();
 // Set route handlers
 guestsRouter
   .route("/")
-  .get(getAllGuests, (req, res) => {
+  .get(getGuests, (req, res) => {
     const dataObj = {
       title: "Guests",
       h1Title: "Guests Page",

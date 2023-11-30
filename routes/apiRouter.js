@@ -3,7 +3,7 @@ const express = require("express");
 
 // Import required functions/variables from custom modules
 const {
-  getAllGuests,
+  getGuests,
   getGuestUsingId,
 } = require("../controllers/guestsController");
 
@@ -15,7 +15,7 @@ apiRouter.get("/", (req, res) => {
   res.send("API Page");
 });
 
-apiRouter.get("/guests", getAllGuests, (req, res) => {
+apiRouter.get("/guests", getGuests, (req, res) => {
   res.send(res.data);
 });
 
