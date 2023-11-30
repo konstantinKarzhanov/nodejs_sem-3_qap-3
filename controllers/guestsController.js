@@ -7,6 +7,7 @@ const getAllGuests = async (req, res, next) => {
   try {
     res.data = await getAllData("guest", "guest_id", "desc", limit);
   } catch (err) {
+    res.data = [];
     console.log(err.message);
   }
 
@@ -20,6 +21,7 @@ const getGuestUsingId = async (req, res, next) => {
   try {
     res.data = await getDataByID("guest", "guest_id", id);
   } catch (err) {
+    res.data = [];
     console.log(err.message);
   }
 
