@@ -2,7 +2,7 @@
 const pool = require("../config/pgPool");
 
 // Define a function to get data from specified table
-const getAllData = async (table, orderByColumn, orderByOrder, limit) => {
+const getData = async (table, orderByColumn, orderByOrder, limit) => {
   try {
     const query = `SELECT * FROM ${table} ORDER BY ${orderByColumn} ${orderByOrder} LIMIT ${limit}`;
     const result = await pool.query(query);
@@ -43,7 +43,7 @@ const addData = async (table, keyArr, valueArr) => {
 
 // Export functions/variables to use in other modules
 module.exports = {
-  getAllData,
+  getData,
   getDataByID,
   addData,
 };
