@@ -1,7 +1,7 @@
 // Import required functions/variables from custom modules
 const pool = require("../config/pgPool");
 
-// Define function to get data from specified table
+// Define a function to get data from specified table
 const getData = async (table, orderByColumn, orderByOrder, limit) => {
   try {
     const query = `SELECT * FROM ${table} ORDER BY ${orderByColumn} ${orderByOrder} LIMIT ${limit}`;
@@ -14,7 +14,7 @@ const getData = async (table, orderByColumn, orderByOrder, limit) => {
   }
 };
 
-// Define function to get data from specified table using id
+// Define a function to get data from specified table using id
 const getDataByID = async (table, idColumn, id) => {
   try {
     const query = `SELECT * FROM ${table} WHERE ${idColumn} = $1`;
@@ -27,7 +27,7 @@ const getDataByID = async (table, idColumn, id) => {
   }
 };
 
-// Define function to add new data to the database
+// Define a function to add new data to the database
 const addData = async (table, keyArr, valueArr) => {
   try {
     const query = `INSERT INTO ${table}(${keyArr}) VALUES (${valueArr.map(

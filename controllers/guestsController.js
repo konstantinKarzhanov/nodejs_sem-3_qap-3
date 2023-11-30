@@ -2,8 +2,8 @@
 const { limit } = require("../config/defaults");
 const { getData, getDataByID, addData } = require("../models/generalModel");
 
-// Define function to get specified number of guests
-const getAllGuests = async (req, res, next) => {
+// Define a function to get specified number of guests
+const getGuests = async (req, res, next) => {
   try {
     res.data = await getData("guest", "guest_id", "desc", limit);
   } catch (err) {
@@ -14,7 +14,7 @@ const getAllGuests = async (req, res, next) => {
   next();
 };
 
-// Define function to get specified guest using id
+// Define a function to get specified guest using id
 const getGuestUsingId = async (req, res, next) => {
   const { id } = req.params;
 
@@ -28,7 +28,7 @@ const getGuestUsingId = async (req, res, next) => {
   next();
 };
 
-// Define function to add new guest to the database
+// Define a function to add new guest to the database
 const addGuest = async (req, res, next) => {
   const { body } = req;
   const keyArr = [];
@@ -50,7 +50,7 @@ const addGuest = async (req, res, next) => {
 
 // Export functions/variables to use in other modules
 module.exports = {
-  getAllGuests,
+  getGuests,
   getGuestUsingId,
   addGuest,
 };
