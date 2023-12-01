@@ -51,8 +51,8 @@
         <div>
           <% if (locals.data.length) { %>
           <ul id="list--guests">
-            <% locals.data.forEach(({ guest_id, guest_fname, guest_lname, guest_dob, guest_email, guest_phone }) => { %>
-            <li id="guest-<%= guest_id %>"><%= `${guest_fname} ${guest_lname} ${guest_dob} ${guest_email} ${guest_phone}`%></li>
+            <% locals.data.forEach(item => { %>
+            <li id="guest-<%= item[0] %>"><span><%= `${item[1]} ${item[2]}` %></span>, <%= `${item.slice(3).join(", ")}` %></li>
             <% }) %>
           </ul>
           <% } else { %>
