@@ -7,14 +7,39 @@
     <main>
       <section>
         <form id="form--guests" method="post">
-          <div>
+          <fieldset>
+            <legend>Guest</legend>
             <label for="fname">First Name
-              <input type="text" id="fname" name="guest_fname" />
+              <input type="text" id="fname" name="guest_fname" placeholder="John" />
             </label>
             <label for="lname">Last Name
-              <input type="text" id="lname" name="guest_lname" />
+              <input type="text" id="lname" name="guest_lname" placeholder="Doe" />
             </label>
-          </div>
+            <label for="dob">Birthday
+              <input type="date" id="dob" name="guest_dob" />
+            </label>
+            <label for="email">Email
+              <input type="text" id="email" name="guest_email" placeholder="email@example.com" />
+            </label>
+            <label for="phone">Phone
+              <input type="text" id="phone" name="guest_phone" placeholder="9999999999" />
+            </label>
+          </fieldset>
+          <fieldset>
+            <legend>Address</legend>
+            <label for="street">Street
+              <input type="text" id="street" name="street" placeholder="10 Main Street">
+            </label>
+            <label for="city">City
+              <input type="text" id="city" name="city" placeholder="St. John's" >
+            </label>
+            <label for="province">Province
+              <input type="text" id="province" name="province" placeholder="NL" >
+            </label>
+            <label for="postal_code">Postal Code
+              <input type="text" id="postal_code" name="postal_code" placeholder="A1B2C3">
+            </label>
+          </fieldset>
           <div>
             <input id="btn--reset" type="reset" disabled />
             <input id="btn--submit" type="submit" value="Add" disabled />
@@ -24,10 +49,10 @@
       </section>
       <section>
         <div>
-          <% if (Array.isArray(locals.data) && locals.data.length) { %>
+          <% if (locals.data.length) { %>
           <ul id="list--guests">
-            <% locals.data.forEach(({ guest_id, guest_fname, guest_lname }) => { %>
-            <li id="guest-<%= guest_id %>"><%= `${guest_fname} ${guest_lname}`%></li>
+            <% locals.data.forEach(item => { %>
+            <li id="guest-<%= item[0] %>"><span><%= `${item[1]} ${item[2]}` %></span>, <%= `${item.slice(3).join(", ")}` %></li>
             <% }) %>
           </ul>
           <% } else { %>
