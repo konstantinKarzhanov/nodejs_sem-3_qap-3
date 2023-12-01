@@ -2,7 +2,7 @@
 const pool = require("../config/pgPool");
 
 // Define a function to create a new entry in the "guest" and "address" tables
-const createGuestAddress = async ({
+const postGuestAddress = async ({
   street,
   city,
   province,
@@ -48,12 +48,11 @@ const createGuestAddress = async ({
       guest_phone,
     ]);
   } catch (err) {
-    console.log("TEST");
     console.log(err);
     throw err;
   }
 };
 
 module.exports = {
-  createGuestAddress,
+  postGuestAddress,
 };
