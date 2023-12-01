@@ -1,6 +1,7 @@
 // Import required functions/variables from custom modules
 const { limit } = require("../config/defaults");
-const { getData, getDataByID, addData } = require("../models/generalModel");
+const { getData, getDataByID } = require("../models/generalModel");
+const { postGuestAddress } = require("../models/guestModel");
 
 // Define a function to get specified number of guests
 const getGuests = async (req, res, next) => {
@@ -43,16 +44,9 @@ const getGuestUsingId = async (req, res, next) => {
 // Define a function to add new guest to the database
 const addGuest = async (req, res, next) => {
   const { body } = req;
-  const keyArr = [];
-  const valueArr = [];
 
   try {
-    for (const key in body) {
-      keyArr.push(key);
-      valueArr.push(body[key]);
-    }
-
-    await addData("guest", keyArr, valueArr);
+    await postGuestAddress(body);
   } catch (err) {
     console.log(err);
   }
