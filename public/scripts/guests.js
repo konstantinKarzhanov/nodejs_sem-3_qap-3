@@ -45,11 +45,9 @@ const setBtnState = (...args) => {
 // Define a function to set inputs value using the target element's value
 const setInputValue = (target, ...args) => {
   const targetArr = target.textContent.split(", ");
-  const dataArr = [...targetArr[0].split(" "), ...targetArr.slice(1)];
 
-  console.log(dataArr);
   args.forEach((item, index) => {
-    item.value = dataArr[index];
+    item.value = targetArr[index];
   });
 };
 
