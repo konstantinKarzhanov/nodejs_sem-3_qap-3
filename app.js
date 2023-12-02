@@ -1,6 +1,7 @@
 // Import external packages
 require("dotenv").config();
 const express = require("express");
+const methodOverride = require("method-override");
 
 // Import routes from custom modules
 const indexRouter = require("./routes/indexRouter");
@@ -15,6 +16,7 @@ app.set("view engine", "ejs");
 
 // Set middleware
 app.use(express.static("public"));
+app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true }));
 
 // Set routes
