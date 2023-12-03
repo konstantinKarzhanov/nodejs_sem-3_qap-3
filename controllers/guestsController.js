@@ -1,7 +1,10 @@
 // Import required functions/variables from custom modules
 const { limit } = require("../config/defaults");
 const { getData, getDataByID } = require("../models/generalModel");
-const { postGuestAddress } = require("../models/guestModel");
+const {
+  postGuestAddress,
+  deleteGuestNullReservation,
+} = require("../models/guestModel");
 
 // Define a function to get specified number of guests
 const getGuests = async (req, res, next) => {
@@ -54,10 +57,29 @@ const addGuest = async (req, res, next) => {
   next();
 };
 
+// Define a function to delete a guest from the database
+const deleteGuest = async (req, res, next) => {
+  const { body } = req;
+  const keyArr = [];
+  const valueArr = [];
+
+  for (key in body) {
+    if (key.includes("guest_") && body[key].trim() != "") {
+      keyArr.push(key);
+      valueArr.push(body[key]);
+    }
+  }
+
+  if (valueArr.length) await deleteGuestNullReservation(keyArr, valueArr);
+
+  next();
+};
+
 // Export functions/variables to use in other modules
 module.exports = {
   getGuests,
   getGuestsPlusAddress,
   getGuestUsingId,
   addGuest,
+  deleteGuest,
 };

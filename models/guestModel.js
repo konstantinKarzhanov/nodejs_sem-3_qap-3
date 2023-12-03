@@ -53,6 +53,36 @@ const postGuestAddress = async ({
   }
 };
 
+// Define a function to delete a guest from the database and set the corresponding guest_id to NULL in the 'reservation' table
+const deleteGuestNullReservation = async (keyArr, valueArr) => {
+  const conditionArr = keyArr.map((item, index) => `${item} = $${index + 1}`);
+  if (!conditionArr.length) return;
+
+  const selectGuestId = `SELECT guest_id FROM guest WHERE ${conditionArr.join(
+    " AND "
+  )}`;
+  const updateReservation = `UPDATE reservation SET guest_id = NULL WHERE guest_id IN (${selectGuestId});`;
+  const deleteGuest = `DELETE FROM guest WHERE guest_id IN (${selectGuestId});`;
+
+  // Acquire a client from the pool
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN;");
+    await client.query(updateReservation, [...valueArr]);
+    await client.query(deleteGuest, [...valueArr]);
+    await client.query("COMMIT;");
+  } catch (err) {
+    await client.query("ROLLBACK;");
+    console.log(err);
+    throw err;
+  } finally {
+    // Return a client back to the pool
+    client.release();
+  }
+};
+
 module.exports = {
   postGuestAddress,
+  deleteGuestNullReservation,
 };
