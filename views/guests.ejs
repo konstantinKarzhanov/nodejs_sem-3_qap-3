@@ -6,7 +6,7 @@
     <%- include("./partials/navbar", { navbar: locals.navbar }) %>
     <main>
       <section>
-        <form id="form--guests" method="post">
+        <form id="form--guests" action="/guests" method="post">
           <fieldset>
             <legend>Guest</legend>
             <label for="fname">First Name
@@ -43,7 +43,7 @@
           <div>
             <input id="btn--reset" type="reset" disabled />
             <input id="btn--submit" type="submit" value="Add" disabled />
-            <input id="btn--delete" type="button" value="Delete" disabled />
+            <input id="btn--delete" type="submit" value="Delete" formaction="/guests/?_method=delete" disabled />
           </div>
         </form>
       </section>
