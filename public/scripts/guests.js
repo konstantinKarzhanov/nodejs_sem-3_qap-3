@@ -51,15 +51,36 @@ const setInputValue = (target, ...args) => {
   });
 };
 
+// Define a function to send a request
+const fetchData = async (url, body) => {
+  await fetch(url, {
+    method: "post",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: body,
+  });
+};
+
+// const fetchData = async (url, method, body) => {
+//   await fetch(url, {
+//     method: method,
+//     headers: {
+//       "Content-Type": "application/x-www-form-urlencoded",
+//     },
+//     body: body,
+//   });
+// };
+
 // Define a function to handle "click" event
 const handleClick = (event) => {
   const target = event.target.closest("li");
 
   if (!target) return;
 
+  setInputValue(target, ...inputArr);
   btnSubmit.value = "Update";
 
-  setInputValue(target, ...inputArr);
   setBtnState(...inputArr);
 };
 
@@ -69,33 +90,25 @@ const handleInput = () => setBtnState(...inputArr);
 // Define a function to handle "reset" event
 const handleReset = () => setInitialBtnState();
 
+// Define a function to handle "submit" event
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  const submitter = event.submitter.value.toLowerCase();
+  const method =
+    submitter == "update" ? "patch" : submitter == "delete" ? "delete" : "post";
+  const formData = new URLSearchParams();
+
+  for (const { name, value } of inputArr) {
+    formData.append(name, value);
+  }
+
+  await fetchData(`http://localhost:3000/guests?_method=${method}`, formData);
+  // await fetchData(`http://localhost:3000/guests`, method, formData);
+};
+
 // Add listeners to the html elements
 list.addEventListener("click", handleClick);
 form.addEventListener("input", handleInput);
 form.addEventListener("reset", handleReset);
-
-// form.addEventListener("submit", async (event) => {
-//   event.preventDefault();
-
-//   // await fetch("http://localhost:3000/guests", {
-//   //   method: "post",
-//   //   headers: {
-//   //     "Content-Type": "application/json",
-//   //   },
-//   //   body: JSON.stringify(formData),
-//   // });
-
-//   // const formData = new URLSearchParams();
-
-//   // for (const key in inputsObj) {
-//   //   formData.append(key, inputsObj[key]);
-//   // }
-
-//   // await fetch("http://localhost:3000/guests", {
-//   //   method: "post",
-//   //   headers: {
-//   //     "Content-Type": "application/x-www-form-urlencoded",
-//   //   },
-//   //   body: formData,
-//   // });
-// });
+form.addEventListener("submit", handleSubmit);
