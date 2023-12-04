@@ -7,6 +7,7 @@ const {
   getGuestsPlusAddress,
   getGuestUsingId,
   addGuest,
+  deleteGuest,
 } = require("../controllers/guestsController");
 
 // Set router
@@ -26,6 +27,9 @@ guestsRouter
     res.render("guests", dataObj);
   })
   .post(addGuest, (req, res) => {
+    res.redirect("/guests");
+  })
+  .delete(deleteGuest, (req, res) => {
     res.redirect("/guests");
   });
 
