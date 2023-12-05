@@ -6,7 +6,7 @@ const {
   deleteGuestNullReservation,
 } = require("../models/guestModel");
 
-// Define a function to get specified number of guests
+// Define a middleware function to get specified number of guests
 const getGuests = async (req, res, next) => {
   try {
     res.data = await getData("guest", "guest_id", "desc", limit);
@@ -18,7 +18,7 @@ const getGuests = async (req, res, next) => {
   next();
 };
 
-// Define a function to get guests and addresses
+// Define a middleware function to get guests and addresses
 const getGuestsPlusAddress = async (req, res, next) => {
   try {
     res.data = await getData("view_guests_address", "guest_id", "desc", limit);
@@ -30,8 +30,8 @@ const getGuestsPlusAddress = async (req, res, next) => {
   next();
 };
 
-// Define a function to get specified guest using id
-const getGuestUsingId = async (req, res, next) => {
+// Define a middleware function to get specified guest using id
+const getGuestById = async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -44,7 +44,7 @@ const getGuestUsingId = async (req, res, next) => {
   next();
 };
 
-// Define a function to add new guest to the database
+// Define a middleware function to add new guest to the database
 const addGuest = async (req, res, next) => {
   const { body } = req;
 
@@ -57,7 +57,7 @@ const addGuest = async (req, res, next) => {
   next();
 };
 
-// Define a function to delete a guest from the database
+// Define a middleware function to delete a guest from the database
 const deleteGuest = async (req, res, next) => {
   const { body } = req;
   const keyArr = [];
@@ -79,7 +79,7 @@ const deleteGuest = async (req, res, next) => {
 module.exports = {
   getGuests,
   getGuestsPlusAddress,
-  getGuestUsingId,
+  getGuestById,
   addGuest,
   deleteGuest,
 };

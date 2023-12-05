@@ -2,10 +2,7 @@
 const express = require("express");
 
 // Import required functions/variables from custom modules
-const {
-  getGuests,
-  getGuestUsingId,
-} = require("../controllers/guestsController");
+const { getGuests, getGuestById } = require("../controllers/guestsController");
 
 // Set router
 const apiRouter = express.Router();
@@ -19,7 +16,7 @@ apiRouter.get("/guests", getGuests, (req, res) => {
   res.send(res.data);
 });
 
-apiRouter.get("/guests/:id", getGuestUsingId, (req, res) => {
+apiRouter.get("/guests/:id", getGuestById, (req, res) => {
   res.send(res.data);
 });
 

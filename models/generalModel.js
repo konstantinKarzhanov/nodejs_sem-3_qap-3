@@ -50,5 +50,4 @@ const addData = async (table, keyArr, valueArr) => {
 module.exports = {
   getData,
   getDataByID,
-  addData,
 };

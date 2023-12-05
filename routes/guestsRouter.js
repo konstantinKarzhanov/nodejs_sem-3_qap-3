@@ -5,7 +5,7 @@ const express = require("express");
 const { navbarGuestsArr } = require("../config/defaults");
 const {
   getGuestsPlusAddress,
-  getGuestUsingId,
+  getGuestById,
   addGuest,
   deleteGuest,
 } = require("../controllers/guestsController");
@@ -33,7 +33,7 @@ guestsRouter
     res.redirect("/guests");
   });
 
-guestsRouter.get("/:id", getGuestUsingId, (req, res) => {
+guestsRouter.get("/:id", getGuestById, (req, res) => {
   const dataObj = {
     title: "Guests",
     h1Title: "Guests Page",

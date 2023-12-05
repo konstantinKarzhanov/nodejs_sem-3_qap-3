@@ -61,16 +61,16 @@ const deleteGuestNullReservation = async (keyArr, valueArr) => {
   const selectGuestId = `SELECT guest_id FROM guest WHERE ${conditionArr.join(
     " AND "
   )}`;
-  const updateReservation = `UPDATE reservation SET guest_id = NULL WHERE guest_id IN (${selectGuestId});`;
-  const deleteGuest = `DELETE FROM guest WHERE guest_id IN (${selectGuestId});`;
+  const updateReservationQuery = `UPDATE reservation SET guest_id = NULL WHERE guest_id IN (${selectGuestId});`;
+  const deleteGuestQuery = `DELETE FROM guest WHERE guest_id IN (${selectGuestId});`;
 
   // Acquire a client from the pool
   const client = await pool.connect();
 
   try {
     await client.query("BEGIN;");
-    await client.query(updateReservation, [...valueArr]);
-    await client.query(deleteGuest, [...valueArr]);
+    await client.query(updateReservationQuery, [...valueArr]);
+    await client.query(deleteGuestQuery, [...valueArr]);
     await client.query("COMMIT;");
   } catch (err) {
     await client.query("ROLLBACK;");
