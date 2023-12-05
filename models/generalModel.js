@@ -19,7 +19,7 @@ const getData = async (table, orderByColumn, orderByOrder, limit) => {
 };
 
 // Define a function to get data from specified table using id
-const getDataByID = async (table, idColumn, id) => {
+const getDataById = async (table, idColumn, id) => {
   const query = {
     text: `SELECT * FROM ${table} WHERE ${idColumn} = $1;`,
     rowMode: "array",
@@ -52,5 +52,5 @@ const getDataByID = async (table, idColumn, id) => {
 // Export functions/variables to use in other modules
 module.exports = {
   getData,
-  getDataByID,
+  getDataById,
 };

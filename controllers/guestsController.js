@@ -1,6 +1,6 @@
 // Import required functions/variables from custom modules
 const { limit } = require("../config/defaults");
-const { getData, getDataByID } = require("../models/generalModel");
+const { getData, getDataById } = require("../models/generalModel");
 const {
   postGuestAddress,
   deleteGuestNullReservation,
@@ -35,7 +35,7 @@ const getGuestById = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    res.data = await getDataByID("guest", "guest_id", id);
+    res.data = await getDataById("guest", "guest_id", id);
   } catch (err) {
     res.data = [];
     console.log(err.message);
