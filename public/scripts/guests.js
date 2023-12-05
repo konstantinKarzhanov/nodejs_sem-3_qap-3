@@ -1,7 +1,16 @@
 // Define required variables
 const list = document.querySelector("#list--guests");
 const form = document.forms["form--guests"];
-const inputArr = Array.from(new FormData(form).keys(), (item) => form[item]);
+const formDataInputArr = Array.from(
+  new FormData(form).keys(),
+  (item) => form[item]
+);
+const formDataInputSubArr = formDataInputArr.reduce((acc, current) => {
+  if (current.name.includes("guest_")) {
+    acc.push(current);
+  }
+  return acc;
+}, []);
 const {
   "btn--reset": btnReset,
   "btn--submit": btnSubmit,
@@ -18,27 +27,44 @@ const setInitialBtnState = () => {
 };
 
 // Define a function to set state of the buttons based on the inputs value
-const setBtnState = (...args) => {
-  if (args.every((item) => item.value.trim() != "")) {
+const setBtnState = (arr, subArr) => {
+  if (arr.every((item) => item.value.trim() != "")) {
     btnReset.disabled = false;
     btnSubmit.disabled = false;
     btnDelete.disabled = false;
-  } else if (args.some((item) => item.value.trim() != "")) {
+  } else if (arr.every((item) => item.value.trim() == "")) {
+    setInitialBtnState();
+  } else if (subArr.some((item) => item.value.trim() != "")) {
     btnReset.disabled = false;
     btnSubmit.disabled = true;
     btnDelete.disabled = false;
   } else {
-    setInitialBtnState();
+    btnReset.disabled = false;
+    btnSubmit.disabled = true;
+    btnDelete.disabled = true;
   }
 };
 
 // Define a function to set inputs value using the target element's value
-const setInputValue = (target, ...args) => {
+const setInputValue = (target, arr) => {
   const targetArr = target.textContent.split(", ");
 
-  args.forEach((item, index) => {
+  arr.forEach((item, index) => {
     item.value = targetArr[index];
   });
+};
+
+// Define a function to confirm "delete" submittion
+const confirmDelete = (arr) => {
+  const data = arr
+    .map(({ value, parentElement }) => {
+      if (value.trim() != "")
+        return `${parentElement.textContent.trim()}: "${value}"\n`;
+    })
+    .join("");
+  const message = `Are you sure you want to delete all guests who have data like:\n${data}`;
+
+  return confirm(message);
 };
 
 // Define a function to handle "click" event
@@ -47,14 +73,14 @@ const handleClick = (event) => {
 
   if (!target) return;
 
-  setInputValue(target, ...inputArr);
+  setInputValue(target, formDataInputArr);
   btnSubmit.textContent = "Update";
 
-  setBtnState(...inputArr);
+  setBtnState(formDataInputArr, formDataInputSubArr);
 };
 
 // Define a function to handle "input" event
-const handleInput = () => setBtnState(...inputArr);
+const handleInput = () => setBtnState(formDataInputArr, formDataInputSubArr);
 
 // Define a function to handle "reset" event
 const handleReset = () => setInitialBtnState();
@@ -67,6 +93,8 @@ function handleSubmit(event) {
   const text = submitter.textContent.toLowerCase();
   const method =
     text == "update" ? "patch" : text == "delete" ? "delete" : "post";
+
+  if (method == "delete" && !confirmDelete(formDataInputSubArr)) return;
 
   this.action = `?_method=${method}`;
   this.submit();
