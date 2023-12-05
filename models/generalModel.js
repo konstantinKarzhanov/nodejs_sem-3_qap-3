@@ -4,7 +4,7 @@ const pool = require("../config/pgPool");
 // Define a function to get data from specified table
 const getData = async (table, orderByColumn, orderByOrder, limit) => {
   const query = {
-    text: `SELECT * FROM ${table} ORDER BY ${orderByColumn} ${orderByOrder} LIMIT ${limit}`,
+    text: `SELECT * FROM ${table} ORDER BY ${orderByColumn} ${orderByOrder} LIMIT ${limit};`,
     rowMode: "array",
   };
 
@@ -20,7 +20,7 @@ const getData = async (table, orderByColumn, orderByOrder, limit) => {
 
 // Define a function to get data from specified table using id
 const getDataByID = async (table, idColumn, id) => {
-  const query = `SELECT * FROM ${table} WHERE ${idColumn} = $1`;
+  const query = `SELECT * FROM ${table} WHERE ${idColumn} = $1;`;
 
   try {
     const result = await pool.query(query, [id]);
@@ -36,7 +36,7 @@ const getDataByID = async (table, idColumn, id) => {
 const addData = async (table, keyArr, valueArr) => {
   const query = `INSERT INTO ${table}(${keyArr}) VALUES (${valueArr.map(
     (_, index) => "$" + (index + 1)
-  )})`;
+  )});`;
 
   try {
     await pool.query(query, [...valueArr]);

@@ -33,7 +33,7 @@ const postGuestAddress = async ({
   const upsert = `${insertIntoGuest} ON CONFLICT ON CONSTRAINT uq_guest DO ${updateGuest}`;
 
   // Set the query variable
-  const query = `${cte} ${upsert}`;
+  const query = `${cte} ${upsert};`;
 
   try {
     await pool.query(query, [
