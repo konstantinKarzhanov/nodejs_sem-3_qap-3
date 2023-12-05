@@ -20,7 +20,10 @@ const getData = async (table, orderByColumn, orderByOrder, limit) => {
 
 // Define a function to get data from specified table using id
 const getDataByID = async (table, idColumn, id) => {
-  const query = `SELECT * FROM ${table} WHERE ${idColumn} = $1;`;
+  const query = {
+    text: `SELECT * FROM ${table} WHERE ${idColumn} = $1;`,
+    rowMode: "array",
+  };
 
   try {
     const result = await pool.query(query, [id]);
@@ -32,19 +35,19 @@ const getDataByID = async (table, idColumn, id) => {
   }
 };
 
-// Define a function to add new data to the database
-const addData = async (table, keyArr, valueArr) => {
-  const query = `INSERT INTO ${table}(${keyArr}) VALUES (${valueArr.map(
-    (_, index) => "$" + (index + 1)
-  )});`;
+// // Define a function to add new data to the database
+// const addData = async (table, keyArr, valueArr) => {
+//   const query = `INSERT INTO ${table}(${keyArr}) VALUES (${valueArr.map(
+//     (_, index) => "$" + (index + 1)
+//   )});`;
 
-  try {
-    await pool.query(query, [...valueArr]);
-  } catch (err) {
-    console.log(err.message);
-    throw err;
-  }
-};
+//   try {
+//     await pool.query(query, [...valueArr]);
+//   } catch (err) {
+//     console.log(err.message);
+//     throw err;
+//   }
+// };
 
 // Export functions/variables to use in other modules
 module.exports = {
