@@ -1,26 +1,16 @@
 // Define required variables
 const list = document.querySelector("#list--guests");
 const form = document.forms["form--guests"];
+const inputArr = Array.from(new FormData(form).keys(), (item) => form[item]);
 const {
   "btn--reset": btnReset,
   "btn--submit": btnSubmit,
   "btn--delete": btnDelete,
 } = form;
-const inputArr = [
-  form.fname,
-  form.lname,
-  form.dob,
-  form.email,
-  form.phone,
-  form.street,
-  form.city,
-  form.province,
-  form.postal_code,
-];
 
 // Define a function to set initial state of the buttons
 const setInitialBtnState = () => {
-  btnSubmit.value = "Add";
+  btnSubmit.textContent = "Add";
 
   btnReset.disabled = true;
   btnSubmit.disabled = true;
@@ -51,27 +41,6 @@ const setInputValue = (target, ...args) => {
   });
 };
 
-// Define a function to send a request
-const fetchData = async (url, body) => {
-  await fetch(url, {
-    method: "post",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: body,
-  });
-};
-
-// const fetchData = async (url, method, body) => {
-//   await fetch(url, {
-//     method: method,
-//     headers: {
-//       "Content-Type": "application/x-www-form-urlencoded",
-//     },
-//     body: body,
-//   });
-// };
-
 // Define a function to handle "click" event
 const handleClick = (event) => {
   const target = event.target.closest("li");
@@ -79,7 +48,7 @@ const handleClick = (event) => {
   if (!target) return;
 
   setInputValue(target, ...inputArr);
-  btnSubmit.value = "Update";
+  btnSubmit.textContent = "Update";
 
   setBtnState(...inputArr);
 };
@@ -91,21 +60,17 @@ const handleInput = () => setBtnState(...inputArr);
 const handleReset = () => setInitialBtnState();
 
 // Define a function to handle "submit" event
-const handleSubmit = async (event) => {
+function handleSubmit(event) {
   event.preventDefault();
 
-  const submitter = event.submitter.value.toLowerCase();
+  const { submitter } = event;
+  const text = submitter.textContent.toLowerCase();
   const method =
-    submitter == "update" ? "patch" : submitter == "delete" ? "delete" : "post";
-  const formData = new URLSearchParams();
+    text == "update" ? "patch" : text == "delete" ? "delete" : "post";
 
-  for (const { name, value } of inputArr) {
-    formData.append(name, value);
-  }
-
-  await fetchData(`http://localhost:3000/guests?_method=${method}`, formData);
-  // await fetchData(`http://localhost:3000/guests`, method, formData);
-};
+  this.action = `?_method=${method}`;
+  this.submit();
+}
 
 // Add listeners to the html elements
 list.addEventListener("click", handleClick);
