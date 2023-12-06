@@ -3,15 +3,15 @@ const pool = require("../config/pgPool");
 
 // Define a function to create a new entry in the "guest" and "address" tables
 const postGuestAddress = async ({
-  street,
-  city,
-  province,
-  postal_code,
   guest_fname,
   guest_lname,
   guest_dob,
   guest_email,
   guest_phone,
+  street,
+  city,
+  province,
+  postal_code,
 }) => {
   // Set a variable that is part of the final query
   const insertIntoAddress =
