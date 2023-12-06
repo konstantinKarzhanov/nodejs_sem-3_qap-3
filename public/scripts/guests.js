@@ -53,8 +53,6 @@ const setInputValue = (target, arr) => {
   const { id, textContent } = target;
   const targetArr = [id.split("-").at(-1), ...textContent.split(", ")];
 
-  form.test.value = id.split("-").at(-1);
-
   arr.forEach((item, index) => {
     item.value = targetArr[index];
   });
