@@ -3,6 +3,7 @@ const { limit } = require("../config/defaults");
 const { readData, readDataById } = require("../models/generalModel");
 const {
   createGuestAddress,
+  updateGuestAddress,
   deleteGuestNullReservation,
 } = require("../models/guestModel");
 
@@ -45,6 +46,19 @@ const postGuest = async (req, res, next) => {
   next();
 };
 
+// Define a middleware function to update a guest in the database
+const updateGuest = async (req, res, next) => {
+  const { body } = req;
+
+  try {
+    await updateGuestAddress(body);
+  } catch (err) {
+    console.log(err);
+  }
+
+  next();
+};
+
 // Define a middleware function to delete a guest from the database
 const deleteGuest = async (req, res, next) => {
   const { body } = req;
@@ -58,7 +72,13 @@ const deleteGuest = async (req, res, next) => {
     }
   }
 
-  if (valueArr.length) await deleteGuestNullReservation(keyArr, valueArr);
+  if (valueArr.length) {
+    try {
+      await deleteGuestNullReservation(keyArr, valueArr);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   next();
 };
@@ -68,5 +88,6 @@ module.exports = {
   getGuests,
   getGuestById,
   postGuest,
+  updateGuest,
   deleteGuest,
 };

@@ -7,6 +7,7 @@ const {
   getGuests,
   getGuestById,
   postGuest,
+  updateGuest,
   deleteGuest,
 } = require("../controllers/guestsController");
 
@@ -27,6 +28,9 @@ guestsRouter
     res.render("guests", dataObj);
   })
   .post(postGuest, (req, res) => {
+    res.redirect("/guests");
+  })
+  .patch(updateGuest, (req, res) => {
     res.redirect("/guests");
   })
   .delete(deleteGuest, (req, res) => {
