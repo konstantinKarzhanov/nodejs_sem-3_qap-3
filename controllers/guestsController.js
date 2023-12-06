@@ -52,7 +52,7 @@ const deleteGuest = async (req, res, next) => {
   const valueArr = [];
 
   for (key in body) {
-    if (key.includes("guest_") && body[key].trim() != "") {
+    if (key.includes("guest_") && key != "guest_id" && body[key].trim() != "") {
       keyArr.push(key);
       valueArr.push(body[key]);
     }

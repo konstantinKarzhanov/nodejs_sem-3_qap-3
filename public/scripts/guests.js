@@ -45,9 +45,10 @@ const setBtnState = (arr, subArr) => {
   }
 };
 
-// Define a function to set inputs value using the target element's value
+// Define a function to set inputs value using the target element's id and text content
 const setInputValue = (target, arr) => {
-  const targetArr = target.textContent.split(", ");
+  const { id, textContent } = target;
+  const targetArr = [id.split("-").at(-1), ...textContent.split(", ")];
 
   arr.forEach((item, index) => {
     item.value = targetArr[index];
@@ -76,11 +77,12 @@ const handleClick = (event) => {
   setInputValue(target, formDataInputArr);
   btnSubmit.textContent = "Update";
 
-  setBtnState(formDataInputArr, formDataInputSubArr);
+  setBtnState(formDataInputArr.slice(1), formDataInputSubArr.slice(1));
 };
 
 // Define a function to handle "input" event
-const handleInput = () => setBtnState(formDataInputArr, formDataInputSubArr);
+const handleInput = () =>
+  setBtnState(formDataInputArr.slice(1), formDataInputSubArr.slice(1));
 
 // Define a function to handle "reset" event
 const handleReset = () => setInitialBtnState();
@@ -94,7 +96,8 @@ function handleSubmit(event) {
   const method =
     text == "update" ? "patch" : text == "delete" ? "delete" : "post";
 
-  if (method == "delete" && !confirmDelete(formDataInputSubArr)) return;
+  if (method == "delete" && !confirmDelete(formDataInputSubArr.slice(1)))
+    return;
 
   this.action = `?_method=${method}`;
   this.submit();
