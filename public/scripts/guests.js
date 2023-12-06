@@ -94,7 +94,13 @@ function handleSubmit(event) {
   const { submitter } = event;
   const text = submitter.textContent.toLowerCase();
   const method =
-    text == "update" ? "patch" : text == "delete" ? "delete" : "post";
+    text == "add"
+      ? "post"
+      : text == "update"
+      ? "patch"
+      : text == "delete"
+      ? "delete"
+      : "get";
 
   if (method == "delete" && !confirmDelete(formDataInputSubArr.slice(1)))
     return;
