@@ -9,7 +9,7 @@ const {
 // Define a middleware function to get guests and addresses
 const getGuests = async (req, res, next) => {
   try {
-    res.data = await getData("view_guests_address", "guest_id", "desc", limit);
+    res.data = await getData("view_guest_address", "guest_id", "desc", limit);
   } catch (err) {
     res.data = [];
     console.log(err.message);
@@ -23,7 +23,7 @@ const getGuestById = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    res.data = await getDataById("view_guests_address", "guest_id", id);
+    res.data = await getDataById("view_guest_address", "guest_id", id);
   } catch (err) {
     res.data = [];
     console.log(err.message);
