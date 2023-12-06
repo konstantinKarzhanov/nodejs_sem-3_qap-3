@@ -6,7 +6,7 @@ const { navbarGuestsArr } = require("../config/defaults");
 const {
   getGuests,
   getGuestById,
-  addGuest,
+  postGuest,
   deleteGuest,
 } = require("../controllers/guestsController");
 
@@ -26,7 +26,7 @@ guestsRouter
 
     res.render("guests", dataObj);
   })
-  .post(addGuest, (req, res) => {
+  .post(postGuest, (req, res) => {
     res.redirect("/guests");
   })
   .delete(deleteGuest, (req, res) => {

@@ -1,15 +1,15 @@
 // Import required functions/variables from custom modules
 const { limit } = require("../config/defaults");
-const { getData, getDataById } = require("../models/generalModel");
+const { readData, readDataById } = require("../models/generalModel");
 const {
-  postGuestAddress,
+  createGuestAddress,
   deleteGuestNullReservation,
 } = require("../models/guestModel");
 
 // Define a middleware function to get guests and addresses
 const getGuests = async (req, res, next) => {
   try {
-    res.data = await getData("view_guest_address", "guest_id", "desc", limit);
+    res.data = await readData("view_guest_address", "guest_id", "desc", limit);
   } catch (err) {
     res.data = [];
     console.log(err.message);
@@ -23,7 +23,7 @@ const getGuestById = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    res.data = await getDataById("view_guest_address", "guest_id", id);
+    res.data = await readDataById("view_guest_address", "guest_id", id);
   } catch (err) {
     res.data = [];
     console.log(err.message);
@@ -33,11 +33,11 @@ const getGuestById = async (req, res, next) => {
 };
 
 // Define a middleware function to add new guest to the database
-const addGuest = async (req, res, next) => {
+const postGuest = async (req, res, next) => {
   const { body } = req;
 
   try {
-    await postGuestAddress(body);
+    await createGuestAddress(body);
   } catch (err) {
     console.log(err);
   }
@@ -67,6 +67,6 @@ const deleteGuest = async (req, res, next) => {
 module.exports = {
   getGuests,
   getGuestById,
-  addGuest,
+  postGuest,
   deleteGuest,
 };
