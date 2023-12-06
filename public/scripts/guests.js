@@ -19,6 +19,9 @@ const {
 
 // Define a function to set initial state of the buttons
 const setInitialBtnState = () => {
+  formDataInputArr.forEach(
+    (item) => (item.value = item.type == "hidden" ? "" : item.value)
+  );
   btnSubmit.textContent = "Add";
 
   btnReset.disabled = true;
