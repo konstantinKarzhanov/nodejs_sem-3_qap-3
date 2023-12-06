@@ -1,7 +1,7 @@
 // Import required functions/variables from custom modules
 const pool = require("../config/pgPool");
 
-// Define a function to create a new entry in the "guest" and "address" tables
+// Define a function to create a new record in the "guest" and "address" tables
 const createGuestAddress = async ({
   guest_fname,
   guest_lname,
@@ -14,23 +14,23 @@ const createGuestAddress = async ({
   postal_code,
 }) => {
   // Set a variable that is part of the final query
-  const insertIntoAddress =
+  const insertIntoAddressQuery =
     "INSERT INTO address (street, city, province, postal_code) VALUES ($1, $2, $3, $4)";
 
   // Set the parts of the COALESCE function
-  const selectAddressIdFromCTE = "SELECT address_id FROM cte_address";
-  const selectAddressIdFromAddress =
+  const selectAddressIdFromCTEQuery = "SELECT address_id FROM cte_address";
+  const selectAddressIdFromAddressQuery =
     "SELECT address_id FROM address WHERE street = $1 AND city = $2 AND province = $3 AND postal_code = $4)";
-  const coalesceAddressId = `COALESCE((${selectAddressIdFromCTE}), (${selectAddressIdFromAddress})`;
+  const coalesceAddressIdQuery = `COALESCE((${selectAddressIdFromCTEQuery}), (${selectAddressIdFromAddressQuery})`;
 
   // Set variables that are parts of the final query
-  const insertIntoGuest = `INSERT INTO guest (address_id, guest_fname, guest_lname, guest_dob, guest_email, guest_phone) VALUES (${coalesceAddressId}, $5, $6, $7, $8, $9)`;
-  const updateGuest =
+  const insertIntoGuestQuery = `INSERT INTO guest (address_id, guest_fname, guest_lname, guest_dob, guest_email, guest_phone) VALUES (${coalesceAddressIdQuery}, $5, $6, $7, $8, $9)`;
+  const updateGuestQuery =
     "UPDATE SET address_id = EXCLUDED.address_id, guest_email = EXCLUDED.guest_email, guest_phone = EXCLUDED.guest_phone, last_update = NOW()";
 
   // Set variables that are the main blocks of the final query
-  const cte = `WITH cte_address AS (${insertIntoAddress} ON CONFLICT ON CONSTRAINT uq_address DO NOTHING RETURNING address_id)`;
-  const upsert = `${insertIntoGuest} ON CONFLICT ON CONSTRAINT uq_guest DO ${updateGuest}`;
+  const cte = `WITH cte_address AS (${insertIntoAddressQuery} ON CONFLICT ON CONSTRAINT uq_address DO NOTHING RETURNING address_id)`;
+  const upsert = `${insertIntoGuestQuery} ON CONFLICT ON CONSTRAINT uq_guest DO ${updateGuestQuery}`;
 
   // Set the query variable
   const query = `${cte} ${upsert};`;
@@ -58,11 +58,11 @@ const deleteGuestNullReservation = async (keyArr, valueArr) => {
   const conditionArr = keyArr.map((item, index) => `${item} = $${index + 1}`);
   if (!conditionArr.length) return;
 
-  const selectGuestId = `SELECT guest_id FROM guest WHERE ${conditionArr.join(
+  const selectGuestIdQuery = `SELECT guest_id FROM guest WHERE ${conditionArr.join(
     " AND "
   )}`;
-  const updateReservationQuery = `UPDATE reservation SET guest_id = NULL WHERE guest_id IN (${selectGuestId});`;
-  const deleteGuestQuery = `DELETE FROM guest WHERE guest_id IN (${selectGuestId});`;
+  const updateReservationQuery = `UPDATE reservation SET guest_id = NULL WHERE guest_id IN (${selectGuestIdQuery});`;
+  const deleteGuestQuery = `DELETE FROM guest WHERE guest_id IN (${selectGuestIdQuery});`;
 
   // Acquire a client from the pool
   const client = await pool.connect();
