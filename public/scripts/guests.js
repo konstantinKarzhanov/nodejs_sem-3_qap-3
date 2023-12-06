@@ -18,7 +18,7 @@ const {
 } = form;
 
 // Define a function to set initial state of the buttons
-const setInitialBtnState = () => {
+const setControlsToInitialState = () => {
   formDataInputArr.forEach(
     (item) => (item.value = item.type == "hidden" ? "" : item.value)
   );
@@ -36,7 +36,7 @@ const setBtnState = (arr, subArr) => {
     btnSubmit.disabled = false;
     btnDelete.disabled = false;
   } else if (arr.every((item) => item.value.trim() == "")) {
-    setInitialBtnState();
+    setControlsToInitialState();
   } else if (subArr.some((item) => item.value.trim() != "")) {
     btnReset.disabled = false;
     btnSubmit.disabled = true;
@@ -52,6 +52,8 @@ const setBtnState = (arr, subArr) => {
 const setInputValue = (target, arr) => {
   const { id, textContent } = target;
   const targetArr = [id.split("-").at(-1), ...textContent.split(", ")];
+
+  form.test.value = id.split("-").at(-1);
 
   arr.forEach((item, index) => {
     item.value = targetArr[index];
@@ -88,7 +90,7 @@ const handleInput = () =>
   setBtnState(formDataInputArr.slice(1), formDataInputSubArr.slice(1));
 
 // Define a function to handle "reset" event
-const handleReset = () => setInitialBtnState();
+const handleReset = () => setControlsToInitialState();
 
 // Define a function to handle "submit" event
 function handleSubmit(event) {
