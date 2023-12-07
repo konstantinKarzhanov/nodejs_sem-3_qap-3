@@ -50,7 +50,7 @@
       </section>
       <section>
         <div>
-          <% if (locals.data.length) { %>
+          <% if (locals.data && locals.data.length) { %>
           <ul id="list--guests">
             <% locals.data.forEach(item => { %>
             <li id="guest-<%= item[0] %>"><%= item.slice(1).join(", ") %></li>
