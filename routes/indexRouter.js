@@ -2,7 +2,7 @@
 const express = require("express");
 
 // Import required functions/variables from custom modules
-const { navbarMainArr } = require("../config/defaults");
+const { navbarMainMap } = require("../config/defaults");
 
 // Set router
 const indexRouter = express.Router();
@@ -12,7 +12,7 @@ indexRouter.get("^/$|^/home$", (req, res) => {
   res.render("index", {
     title: "Home",
     h1Title: "Home Page",
-    navbar: navbarMainArr,
+    navbar: navbarMainMap,
   });
 });
 
