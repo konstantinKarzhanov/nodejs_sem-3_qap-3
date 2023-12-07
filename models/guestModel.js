@@ -48,7 +48,7 @@ const createGuestAddress = async ({
       guest_phone,
     ]);
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
     throw err;
   }
 };
@@ -97,7 +97,7 @@ const updateGuestAddress = async ({
       guest_id,
     ]);
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
     throw err;
   }
 };
@@ -123,7 +123,7 @@ const deleteGuestNullReservation = async (keyArr, valueArr) => {
     await client.query("COMMIT;");
   } catch (err) {
     await client.query("ROLLBACK;");
-    console.log(err);
+    console.log(err.message);
     throw err;
   } finally {
     // Return a client back to the pool

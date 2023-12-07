@@ -40,7 +40,7 @@ const postGuest = async (req, res, next) => {
   try {
     await createGuestAddress(body);
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
   }
 
   next();
@@ -53,7 +53,7 @@ const updateGuest = async (req, res, next) => {
   try {
     await updateGuestAddress(body);
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
   }
 
   next();
@@ -76,7 +76,7 @@ const deleteGuest = async (req, res, next) => {
     try {
       await deleteGuestNullReservation(keyArr, valueArr);
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   }
 
