@@ -58,17 +58,16 @@ const setInputValue = (target, arr) => {
   });
 };
 
-// Define a function to confirm "delete" submittion
-const confirmDelete = (arr) => {
+// Define a function to confirm submittion
+const confirmSubmit = (arr, message) => {
   const data = arr
     .map(({ value, parentElement }) => {
       if (value.trim() != "")
         return `${parentElement.textContent.trim()}: "${value}"\n`;
     })
     .join("");
-  const message = `Are you sure you want to delete all guests who have data like:\n${data}`;
 
-  return confirm(message);
+  return confirm(`${message}:\n\n${data}`);
 };
 
 // Define a function to handle "click" event
@@ -96,19 +95,29 @@ function handleSubmit(event) {
 
   const { submitter } = event;
   const text = submitter.textContent.toLowerCase();
-  const method =
+
+  let isConfirmed = true;
+  let message = "";
+  if (text == "delete") {
+    message =
+      "Click 'OK' if you want to delete ALL records which have data like";
+    isConfirmed = confirmSubmit(formDataInputSubArr.slice(1), message);
+  } else if (text == "update") {
+    message = "Click 'OK' if you want to update record with new data";
+    isConfirmed = confirmSubmit(formDataInputArr.slice(1), message);
+  }
+
+  if (!isConfirmed) return;
+
+  this.action = `?_method=${
     text == "add"
       ? "post"
       : text == "update"
       ? "patch"
       : text == "delete"
       ? "delete"
-      : "get";
-
-  if (method == "delete" && !confirmDelete(formDataInputSubArr.slice(1)))
-    return;
-
-  this.action = `?_method=${method}`;
+      : "get"
+  }`;
   this.submit();
 }
 
