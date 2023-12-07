@@ -2,7 +2,7 @@
 const express = require("express");
 
 // Import required functions/variables from custom modules
-const { navbarGuestsArr } = require("../config/defaults");
+const { navbarGuestsMap } = require("../config/defaults");
 const {
   getGuests,
   getGuestById,
@@ -23,7 +23,7 @@ guestsRouter
     const dataObj = {
       title: "Guests",
       h1Title: "Guests Page",
-      navbar: navbarGuestsArr,
+      navbar: navbarGuestsMap,
       data,
     };
 
@@ -45,7 +45,7 @@ guestsRouter.get("/:id", getGuestById, (req, res) => {
   const dataObj = {
     title: "Guests",
     h1Title: "Guests Page",
-    navbar: navbarGuestsArr,
+    navbar: navbarGuestsMap,
     data,
   };
 
