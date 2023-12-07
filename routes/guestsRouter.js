@@ -18,11 +18,13 @@ const guestsRouter = express.Router();
 guestsRouter
   .route("/")
   .get(getGuests, (req, res) => {
+    const data = res.data.map((item) => Object.values(item));
+
     const dataObj = {
       title: "Guests",
       h1Title: "Guests Page",
       navbar: navbarGuestsArr,
-      data: res.data,
+      data,
     };
 
     res.render("guests", dataObj);
@@ -38,11 +40,13 @@ guestsRouter
   });
 
 guestsRouter.get("/:id", getGuestById, (req, res) => {
+  const data = res.data.map((item) => Object.values(item));
+
   const dataObj = {
     title: "Guests",
     h1Title: "Guests Page",
     navbar: navbarGuestsArr,
-    data: res.data,
+    data,
   };
 
   res.render("guests", dataObj);
