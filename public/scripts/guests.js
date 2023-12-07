@@ -84,7 +84,7 @@ function handleSubmit(event) {
 }
 
 // Add listeners to the html elements
-list.addEventListener("click", handleClick);
+list && list.addEventListener("click", handleClick);
 form.addEventListener("input", handleInput);
 form.addEventListener("reset", handleReset);
 form.addEventListener("submit", handleSubmit);
