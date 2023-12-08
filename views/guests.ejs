@@ -11,34 +11,46 @@
             <legend>Guest</legend>
             <input type="hidden" id="guest_id" name="guest_id"/>
             <label for="guest_fname">First Name
-              <input type="text" id="guest_fname" name="guest_fname" placeholder="John" />
+              <input type="text" id="guest_fname" name="guest_fname" maxlength="30" placeholder="John" />
             </label>
             <label for="guest_lname">Last Name
-              <input type="text" id="guest_lname" name="guest_lname" placeholder="Doe" />
+              <input type="text" id="guest_lname" name="guest_lname" maxlength="30" placeholder="Doe" />
             </label>
             <label for="guest_dob">Birthday
-              <input type="date" id="guest_dob" name="guest_dob" value="2023-12-05"/>
+              <input type="date" id="guest_dob" name="guest_dob" />
             </label>
             <label for="guest_email">Email
-              <input type="text" id="guest_email" name="guest_email" placeholder="email@example.com" />
+              <input type="email" id="guest_email" name="guest_email" maxlength="50" placeholder="test@example.com" />
             </label>
             <label for="guest_phone">Phone
-              <input type="text" id="guest_phone" name="guest_phone" value="1234567890" placeholder="9999999999" />
+              <input type="tel" id="guest_phone" name="guest_phone" minlength="10" maxlength="10" placeholder="7091234567" />
             </label>
           </fieldset>
           <fieldset>
             <legend>Address</legend>
             <label for="street">Street
-              <input type="text" id="street" name="street" value="test" placeholder="10 Main Street">
+              <input type="text" id="street" name="street" maxlength="50" placeholder="10 Main Street">
             </label>
             <label for="city">City
-              <input type="text" id="city" name="city" value="test" placeholder="St. John's" >
+              <input type="text" id="city" name="city" maxlength="20" placeholder="St. John's" >
             </label>
             <label for="province">Province
-              <input type="text" id="province" name="province" value="tt" placeholder="NL" >
+              <input type="text" id="province" list="province_list" name="province" minlength="2" maxlength="2" placeholder="NL" >
+              <datalist id="province_list">
+                <option value="AB">Alberta</option>
+                <option value="BC">British Columbia</option>
+                <option value="MB">Manitoba</option>
+                <option value="NB">New Brunswick</option>
+                <option value="NL">Newfoundland and Labrador</option>
+                <option value="NS">Nova Scotia</option>
+                <option value="ON">Ontario</option>
+                <option value="PE">Prince Edward Island</option>
+                <option value="QC">Quebec</option>
+                <option value="SK">Saskatchewan</option>
+              </datalist>
             </label>
             <label for="postal_code">Postal Code
-              <input type="text" id="postal_code" name="postal_code" value="test" placeholder="A1B2C3">
+              <input type="text" id="postal_code" name="postal_code" minlength="6" maxlength="6" placeholder="A1B2C3">
             </label>
           </fieldset>
           <div>
