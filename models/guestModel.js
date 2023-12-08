@@ -8,19 +8,19 @@ const createGuestAddress = async ({
   guest_dob,
   guest_email,
   guest_phone,
-  street,
-  city,
-  province,
-  postal_code,
+  address_street,
+  address_city,
+  address_province,
+  address_postal_code,
 }) => {
   // Set a variable that is part of the final query
   const insertIntoAddressQuery =
-    "INSERT INTO address (street, city, province, postal_code) VALUES ($1, $2, $3, $4)";
+    "INSERT INTO address (address_street, address_city, address_province, address_postal_code) VALUES ($1, $2, $3, $4)";
 
   // Set the parts of the COALESCE function
   const selectAddressIdFromCTEQuery = "SELECT address_id FROM cte_address";
   const selectAddressIdFromAddressQuery =
-    "SELECT address_id FROM address WHERE street = $1 AND city = $2 AND province = $3 AND postal_code = $4)";
+    "SELECT address_id FROM address WHERE address_street = $1 AND address_city = $2 AND address_province = $3 AND address_postal_code = $4)";
   const coalesceAddressIdQuery = `COALESCE((${selectAddressIdFromCTEQuery}), (${selectAddressIdFromAddressQuery})`;
 
   // Set variables that are parts of the final query
@@ -37,10 +37,10 @@ const createGuestAddress = async ({
 
   try {
     await pool.query(query, [
-      street,
-      city,
-      province,
-      postal_code,
+      address_street,
+      address_city,
+      address_province,
+      address_postal_code,
       guest_fname,
       guest_lname,
       guest_dob,
@@ -61,19 +61,19 @@ const updateGuestAddress = async ({
   guest_dob,
   guest_email,
   guest_phone,
-  street,
-  city,
-  province,
-  postal_code,
+  address_street,
+  address_city,
+  address_province,
+  address_postal_code,
 }) => {
   // Set a variable that is part of the final query
   const insertIntoAddressQuery =
-    "INSERT INTO address (street, city, province, postal_code) VALUES ($1, $2, $3, $4)";
+    "INSERT INTO address (address_street, address_city, address_province, address_postal_code) VALUES ($1, $2, $3, $4)";
 
   // Set the parts of the COALESCE function
   const selectAddressIdFromCTEQuery = "SELECT address_id FROM cte_address";
   const selectAddressIdFromAddressQuery =
-    "SELECT address_id FROM address WHERE street = $1 AND city = $2 AND province = $3 AND postal_code = $4)";
+    "SELECT address_id FROM address WHERE address_street = $1 AND address_city = $2 AND address_province = $3 AND address_postal_code = $4)";
   const coalesceAddressIdQuery = `COALESCE((${selectAddressIdFromCTEQuery}), (${selectAddressIdFromAddressQuery})`;
 
   // Set variables that are the main blocks of the final query
@@ -85,10 +85,10 @@ const updateGuestAddress = async ({
 
   try {
     await pool.query(query, [
-      street,
-      city,
-      province,
-      postal_code,
+      address_street,
+      address_city,
+      address_province,
+      address_postal_code,
       guest_fname,
       guest_lname,
       guest_dob,
