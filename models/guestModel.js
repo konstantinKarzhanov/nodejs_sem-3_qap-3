@@ -20,8 +20,8 @@ const createGuestAddress = async ({
   // Set the parts of the COALESCE function
   const selectAddressIdFromCTEQuery = "SELECT address_id FROM cte_address";
   const selectAddressIdFromAddressQuery =
-    "SELECT address_id FROM address WHERE address_street = $1 AND address_city = $2 AND address_province = $3 AND address_postal_code = $4)";
-  const coalesceAddressIdQuery = `COALESCE((${selectAddressIdFromCTEQuery}), (${selectAddressIdFromAddressQuery})`;
+    "SELECT address_id FROM address WHERE address_street = $1 AND address_city = $2 AND address_province = $3 AND address_postal_code = $4";
+  const coalesceAddressIdQuery = `COALESCE((${selectAddressIdFromCTEQuery}), (${selectAddressIdFromAddressQuery}))`;
 
   // Set variables that are parts of the final query
   const insertIntoGuestQuery = `INSERT INTO guest (address_id, guest_fname, guest_lname, guest_dob, guest_email, guest_phone) VALUES (${coalesceAddressIdQuery}, $5, $6, $7, $8, $9)`;
@@ -73,8 +73,8 @@ const updateGuestAddress = async ({
   // Set the parts of the COALESCE function
   const selectAddressIdFromCTEQuery = "SELECT address_id FROM cte_address";
   const selectAddressIdFromAddressQuery =
-    "SELECT address_id FROM address WHERE address_street = $1 AND address_city = $2 AND address_province = $3 AND address_postal_code = $4)";
-  const coalesceAddressIdQuery = `COALESCE((${selectAddressIdFromCTEQuery}), (${selectAddressIdFromAddressQuery})`;
+    "SELECT address_id FROM address WHERE address_street = $1 AND address_city = $2 AND address_province = $3 AND address_postal_code = $4";
+  const coalesceAddressIdQuery = `COALESCE((${selectAddressIdFromCTEQuery}), (${selectAddressIdFromAddressQuery}))`;
 
   // Set variables that are the main blocks of the final query
   const cte = `WITH cte_address AS (${insertIntoAddressQuery} ON CONFLICT ON CONSTRAINT uq_address DO NOTHING RETURNING address_id)`;
