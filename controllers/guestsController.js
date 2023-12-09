@@ -50,10 +50,38 @@ const postGuest = async (req, res, next) => {
 const updateGuest = async (req, res, next) => {
   const { body } = req;
 
-  try {
-    await updateGuestAddress(body);
-  } catch (err) {
-    console.log(err.message);
+  const keyGuestArr = [];
+  const valueGuestArr = [];
+  const keyAddressArr = [];
+  const valueAddressArr = [];
+  let countKeyAddress = 0;
+
+  for (const key in body) {
+    if (key.includes("guest_") && body[key].trim() != "") {
+      keyGuestArr.push(key);
+      valueGuestArr.push(body[key]);
+    } else if (key.includes("address_")) {
+      countKeyAddress++;
+
+      if (body[key].trim() != "") {
+        keyAddressArr.push(key);
+        valueAddressArr.push(body[key]);
+      }
+    }
+  }
+
+  if (valueGuestArr.length || valueAddressArr.length) {
+    try {
+      await updateGuestAddress(
+        keyGuestArr,
+        valueGuestArr,
+        keyAddressArr,
+        valueAddressArr,
+        countKeyAddress
+      );
+    } catch (err) {
+      console.log(err.message);
+    }
   }
 
   next();
