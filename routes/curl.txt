@@ -4,16 +4,16 @@
 // curl -H "Content-Type: application/json" http://localhost:3000/api/guests
 
 // POST request:
-// curl -X POST -d "guest_id=&guest_fname=postUrlencoded&guest_lname=curlTest&guest_dob=2023-12-07&guest_email=postUrlencoded&guest_phone=9&street=curlTest&city=curlTest&province=tt&postal_code=curlT" http://localhost:3000/api/guests
-// curl -X POST -H "Content-Type: application/json" -d '{"guest_id":"","guest_fname":"postJSON","guest_lname":"curlTest","guest_dob":"2023-12-07","guest_email":"postJSON","guest_phone":"9","street":"curlTest","city":"curlTest","province":"tt","postal_code":"curlT"}' http://localhost:3000/api/guests
+// curl -X POST -d "guest_id=&guest_fname=postUrlencoded&guest_lname=curlTest&guest_dob=2023-12-07&guest_email=postUrlencoded&guest_phone=9&address_street=curlTest&address_city=curlTest&address_province=tt&address_postal_code=curlT" http://localhost:3000/api/guests
+// curl -X POST -H "Content-Type: application/json" -d '{"guest_id":"","guest_fname":"postJSON","guest_lname":"curlTest","guest_dob":"2023-12-07","guest_email":"postJSON","guest_phone":"9","address_street":"curlTest","address_city":"curlTest","address_province":"tt","address_postal_code":"curlT"}' http://localhost:3000/api/guests
 
 // PATCH request:
-// curl -X PATCH -d "guest_id=74&guest_fname=patchUrlencoded&guest_lname=updatedCurlTest&guest_dob=2023-12-07&guest_email=updatedCurlTest&guest_phone=1&street=updatedCurlTest&city=updatedCurlTest&province=tt&postal_code=curlB" http://localhost:3000/api/guests
-// curl -X PATCH -H "Content-Type: application/json" -d '{"guest_id":"74","guest_fname":"patchJSON","guest_lname":"updatedCurlTest","guest_dob":"2023-12-07","guest_email":"updatedCurlTest","guest_phone":"1","street":"curlTest","city":"curlTest","province":"tt","postal_code":"curlT"}' http://localhost:3000/api/guests
+// curl -X PATCH -d "guest_id=74&guest_fname=patchUrlencoded&guest_lname=updatedCurlTest&guest_dob=2023-12-07&guest_email=updatedCurlTest&guest_phone=1&address_street=updatedCurlTest&address_city=updatedCurlTest&address_province=tt&address_postal_code=curlB" http://localhost:3000/api/guests
+// curl -X PATCH -H "Content-Type: application/json" -d '{"guest_id":"74","guest_fname":"patchJSON","guest_lname":"updatedCurlTest","guest_dob":"2023-12-07","guest_email":"updatedCurlTest","guest_phone":"1","address_street":"curlTest","address_city":"curlTest","address_province":"tt","address_postal_code":"curlT"}' http://localhost:3000/api/guests
 
 // PUT request:
-// curl -X PUT -d "guest_id=74&guest_fname=putUrlencoded&guest_lname=updatedCurlTest&guest_dob=2023-12-07&guest_email=updatedCurlTest&guest_phone=1&street=updatedCurlTest&city=updatedCurlTest&province=tt&postal_code=curlB" http://localhost:3000/api/guests
-// curl -X PUT -H "Content-Type: application/json" -d '{"guest_id":"74","guest_fname":"putJSON","guest_lname":"updatedCurlTest","guest_dob":"2023-12-07","guest_email":"updatedCurlTest","guest_phone":"1","street":"curlTest","city":"curlTest","province":"tt","postal_code":"curlT"}' http://localhost:3000/api/guests
+// curl -X PUT -d "guest_id=74&guest_fname=putUrlencoded&guest_lname=updatedCurlTest&guest_dob=2023-12-07&guest_email=updatedCurlTest&guest_phone=1&address_street=updatedCurlTest&address_city=updatedCurlTest&address_province=tt&address_postal_code=curlB" http://localhost:3000/api/guests
+// curl -X PUT -H "Content-Type: application/json" -d '{"guest_id":"74","guest_fname":"putJSON","guest_lname":"updatedCurlTest","guest_dob":"2023-12-07","guest_email":"updatedCurlTest","guest_phone":"1","address_street":"curlTest","address_city":"curlTest","address_province":"tt","address_postal_code":"curlT"}' http://localhost:3000/api/guests
 
 // DELETE request:
 // curl -X DELETE -d "guest_lname=Fontell" http://localhost:3000/api/guests
