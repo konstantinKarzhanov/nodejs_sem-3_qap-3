@@ -27,21 +27,28 @@ const setInitialBtnState = (btnArr) => {
 // Define a function to set state of the buttons based on the controls value
 const setBtnState = (controlArr, controlSubArr, btnArr) => {
   if (controlArr.slice(1).every((item) => item.value.trim() != "")) {
+    // Allow to RESET, ADD, UPDATE, DELETE
     btnArr.forEach((item) => (item.disabled = false));
   } else if (controlArr.slice(1).every((item) => item.value.trim() == "")) {
+    // Allow nothing
     setValueOfHiddenControl(controlArr);
     setInitialBtnState(btnArr);
-  } else if (controlSubArr.slice(1).some((item) => item.value.trim() != "")) {
+  } else if (controlSubArr.slice(1).every((item) => item.value.trim() == "")) {
+    // Allow to RESET, UPDATE
     btnArr.forEach((item) => {
-      if (item.id == "btn--post") {
+      if (
+        item.id == "btn--delete" ||
+        (item.id == "btn--post" && item.textContent.toLowerCase() == "add")
+      ) {
         item.disabled = true;
       } else {
         item.disabled = false;
       }
     });
   } else {
+    // Allow to RESET, UPDATE, DELETE
     btnArr.forEach((item) => {
-      if (item.id == "btn--post" || item.id == "btn--delete") {
+      if (item.id == "btn--post" && item.textContent.toLowerCase() == "add") {
         item.disabled = true;
       } else {
         item.disabled = false;
