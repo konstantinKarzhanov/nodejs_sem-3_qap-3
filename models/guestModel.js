@@ -1,6 +1,7 @@
 // Import required functions/variables from custom modules
 const pool = require("../config/pgPool");
 const {
+  buildSetClauseArr,
   buildUpdateGuestWithInsertAddressQuery,
   buildUpdateGuestQuery,
   buildUpdateAddressQuery,
@@ -75,7 +76,7 @@ const updateGuestAddress = async (
     // Begin transaction
     await client.query("BEGIN;");
 
-    if (keyAddressArr.length == countKeyAddress) {
+    if (keyAddressArr.length && keyAddressArr.length == countKeyAddress) {
       const updateGuestAddressQuery = buildUpdateGuestWithInsertAddressQuery(
         keyGuestArr,
         keyAddressArr
@@ -114,7 +115,7 @@ const updateGuestAddress = async (
 
 // Define a function to delete a guest from the database and set the corresponding guest_id to NULL in the 'reservation' table
 const deleteGuestNullReservation = async (keyArr, valueArr) => {
-  const conditionArr = keyArr.map((item, index) => `${item} = $${index + 1}`);
+  const conditionArr = buildSetClauseArr(keyArr);
   if (!conditionArr.length) return;
 
   const selectGuestIdQuery = `SELECT guest_id FROM guest WHERE ${conditionArr.join(

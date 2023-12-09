@@ -59,6 +59,7 @@ const buildUpdateAddressQuery = (arr) => {
 };
 
 module.exports = {
+  buildSetClauseArr,
   buildUpdateGuestWithInsertAddressQuery,
   buildUpdateGuestQuery,
   buildUpdateAddressQuery,
