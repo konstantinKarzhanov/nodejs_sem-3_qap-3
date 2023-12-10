@@ -5,7 +5,7 @@ const methodOverride = require("method-override");
 
 // Import routes from custom modules
 const indexRouter = require("./routes/indexRouter");
-const apiRouter = require("./routes/apiRouter");
+const apiIndexRouter = require("./routes/apiIndexRouter");
 const guestsRouter = require("./routes/guestsRouter");
 
 // Set app
@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Set routes
 app.use("/", indexRouter);
-app.use("/api", apiRouter);
+app.use("/api", apiIndexRouter);
 app.use("/guests", guestsRouter);
 
 // Start the server
