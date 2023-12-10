@@ -38,7 +38,7 @@ const buildUpdateGuestWithInsertAddressQuery = (guestArr, addressArr) => {
   return `${cte} UPDATE guest SET ${setClause} WHERE guest_id = $1;`;
 };
 
-// Define a function to build update query
+// Define a function to build UPDATE query
 const buildUpdateGuestQuery = (arr) => {
   const setClause = `${buildSetClauseArr(
     arr.slice(1),
@@ -49,7 +49,7 @@ const buildUpdateGuestQuery = (arr) => {
   return `UPDATE guest SET ${setClause} WHERE guest_id = $1;`;
 };
 
-// Define a function to build update query
+// Define a function to build UPDATE query
 const buildUpdateAddressQuery = (arr) => {
   const selectAddressIdGuestQuery = `SELECT address_id FROM guest WHERE guest_id = $1`;
   const setClause = `${buildSetClauseArr(arr, 1)}, last_update = NOW()`;
@@ -58,8 +58,53 @@ const buildUpdateAddressQuery = (arr) => {
   return `UPDATE address SET ${setClause} WHERE address_id = (${selectAddressIdGuestQuery});`;
 };
 
+// Define a function to build UPDATE query
+const buildUpdateReservationQuery = (keyArr, valueArr) => {
+  let query = {};
+  let text =
+    "UPDATE reservation SET guest_id = NULL, last_update = NOW() WHERE guest_id ";
+
+  if (keyArr.includes("guest_id")) {
+    query = { text: (text += "= $1;"), values: [valueArr[0]] };
+  } else {
+    const selectGuestIdQuery = `SELECT guest_id FROM guest WHERE ${buildSetClauseArr(
+      keyArr
+    ).join(" AND ")}`;
+
+    query = {
+      text: (text += `IN (${selectGuestIdQuery});`),
+      values: [...valueArr],
+    };
+  }
+
+  return query;
+};
+
+// Define a function to build DELETE query
+const buildDeleteGuestQuery = (keyArr, valueArr) => {
+  let query = {};
+  let text = "DELETE FROM guest WHERE guest_id ";
+
+  if (keyArr.includes("guest_id")) {
+    query = { text: (text += "= $1;"), values: [valueArr[0]] };
+  } else {
+    const selectGuestIdQuery = `SELECT guest_id FROM guest WHERE ${buildSetClauseArr(
+      keyArr
+    ).join(" AND ")}`;
+
+    query = {
+      text: (text += `IN (${selectGuestIdQuery});`),
+      values: [...valueArr],
+    };
+  }
+
+  return query;
+};
+
 module.exports = {
   buildUpdateGuestWithInsertAddressQuery,
   buildUpdateGuestQuery,
   buildUpdateAddressQuery,
+  buildUpdateReservationQuery,
+  buildDeleteGuestQuery,
 };

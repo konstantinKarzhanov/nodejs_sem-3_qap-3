@@ -61,12 +61,13 @@ function handleSubmit(event) {
   let isConfirmed = true;
   let message = "";
   if (text == "delete") {
-    message =
-      "Click 'OK' if you want to delete ALL records which have data like";
-    isConfirmed = confirmSubmit(formDataControlSubArr.slice(1), message);
+    message = `Click 'OK' if you want to delete ${
+      formDataControlSubArr[0].value ? "record with" : "ALL records which have"
+    } data like`;
+    isConfirmed = confirmSubmit(formDataControlSubArr, message);
   } else if (text == "update") {
-    message = "Click 'OK' if you want to update record with new data";
-    isConfirmed = confirmSubmit(formDataControlArr.slice(1), message);
+    message = "Click 'OK' if you want to update record";
+    isConfirmed = confirmSubmit(formDataControlArr, message);
   }
 
   if (!isConfirmed) return;

@@ -94,12 +94,18 @@ const updateGuest = async (req, res, next) => {
 
 // Define a middleware function to delete a guest from the database
 const deleteGuest = async (req, res, next) => {
-  const { body } = req;
+  let { body } = req;
+  const { id } = req.params;
+
+  if (id) {
+    body = { guest_id: id, ...body };
+  }
+
   const keyArr = [];
   const valueArr = [];
 
   for (const key in body) {
-    if (key.includes("guest_") && key != "guest_id" && body[key].trim() != "") {
+    if (key.includes("guest_") && body[key].trim() != "") {
       keyArr.push(key);
       valueArr.push(body[key]);
     }
