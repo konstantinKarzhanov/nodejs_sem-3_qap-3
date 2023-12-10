@@ -41,9 +41,15 @@ apiRouter
 //   res.redirect("api/guests");
 // })
 
-apiRouter.get("/guests/:id", getGuestById, (req, res) => {
-  res.json(res.data);
-});
+apiRouter
+  .route("/guests/:id")
+  .get(getGuestById, (req, res) => {
+    res.json(res.data);
+  })
+  .patch(updateGuest, (req, res) => {
+    res.statusCode = 200;
+    res.json({ message: "OK", status: 200 });
+  });
 
 // Export the router to use in other modules
 module.exports = apiRouter;

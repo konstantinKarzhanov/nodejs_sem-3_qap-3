@@ -48,13 +48,18 @@ const postGuest = async (req, res, next) => {
 
 // Define a middleware function to update a guest in the database
 const updateGuest = async (req, res, next) => {
-  const { body } = req;
+  let { body } = req;
+  const { id } = req.params;
 
   const keyGuestArr = [];
   const valueGuestArr = [];
   const keyAddressArr = [];
   const valueAddressArr = [];
   let countKeyAddress = 0;
+
+  if (id) {
+    body = { guest_id: id, ...body };
+  }
 
   for (const key in body) {
     if (key.includes("guest_") && body[key].trim() != "") {
