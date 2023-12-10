@@ -1,10 +1,11 @@
 // Import required functions/variables from custom modules
 const pool = require("../config/pgPool");
 const {
-  buildSetClauseArr,
   buildUpdateGuestWithInsertAddressQuery,
   buildUpdateGuestQuery,
   buildUpdateAddressQuery,
+  buildUpdateReservationQuery,
+  buildDeleteGuestQuery,
 } = require("./guestModelUtils");
 
 // Define a function to create a new record in the "guest" and "address" tables
@@ -113,16 +114,11 @@ const updateGuestAddress = async (
   }
 };
 
-// Define a function to delete a guest from the database and set the corresponding guest_id to NULL in the 'reservation' table
+// Define a function to delete a guest from the database
+// and set the corresponding guest_id to NULL in the "reservation" table
 const deleteGuestNullReservation = async (keyArr, valueArr) => {
-  const conditionArr = buildSetClauseArr(keyArr);
-  if (!conditionArr.length) return;
-
-  const selectGuestIdQuery = `SELECT guest_id FROM guest WHERE ${conditionArr.join(
-    " AND "
-  )}`;
-  const updateReservationQuery = `UPDATE reservation SET guest_id = NULL, last_update = NOW() WHERE guest_id IN (${selectGuestIdQuery});`;
-  const deleteGuestQuery = `DELETE FROM guest WHERE guest_id IN (${selectGuestIdQuery});`;
+  const updateReservationQuery = buildUpdateReservationQuery(keyArr, valueArr);
+  const deleteGuestQuery = buildDeleteGuestQuery(keyArr, valueArr);
 
   // Acquire a client from the pool
   const client = await pool.connect();
@@ -130,8 +126,9 @@ const deleteGuestNullReservation = async (keyArr, valueArr) => {
   try {
     // Begin transaction
     await client.query("BEGIN;");
-    await client.query(updateReservationQuery, [...valueArr]);
-    await client.query(deleteGuestQuery, [...valueArr]);
+
+    await client.query(updateReservationQuery);
+    await client.query(deleteGuestQuery);
 
     // Commit transaction
     await client.query("COMMIT;");
