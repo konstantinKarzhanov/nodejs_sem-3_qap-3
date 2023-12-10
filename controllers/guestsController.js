@@ -11,8 +11,11 @@ const {
 const getGuests = async (req, res, next) => {
   try {
     res.data = await readData("view_guest_address", "guest_id", "desc", limit);
+
+    if (!res.data.length) res.status(404);
   } catch (err) {
-    res.data = [];
+    res.status(503);
+
     console.log(err.message);
   }
 
@@ -25,8 +28,11 @@ const getGuestById = async (req, res, next) => {
 
   try {
     res.data = await readDataById("view_guest_address", "guest_id", id);
+
+    if (!res.data.length) res.status(404);
   } catch (err) {
-    res.data = [];
+    res.status(503);
+
     console.log(err.message);
   }
 
@@ -39,7 +45,10 @@ const postGuest = async (req, res, next) => {
 
   try {
     await createGuestAddress(body);
+    res.status(201);
   } catch (err) {
+    res.status(503);
+
     console.log(err.message);
   }
 
@@ -85,6 +94,8 @@ const updateGuest = async (req, res, next) => {
         countKeyAddress
       );
     } catch (err) {
+      res.status(503);
+
       console.log(err.message);
     }
   }
@@ -115,6 +126,8 @@ const deleteGuest = async (req, res, next) => {
     try {
       await deleteGuestNullReservation(keyArr, valueArr);
     } catch (err) {
+      res.statusCode = 503;
+
       console.log(err.message);
     }
   }
