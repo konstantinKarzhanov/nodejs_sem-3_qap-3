@@ -62,7 +62,7 @@ const confirmSubmit = (controlArr, message) => {
   const data = controlArr
     .map(({ value, parentElement }) => {
       if (value.trim() != "")
-        return `${parentElement.textContent.trim()}: "${value}"\n`;
+        return `${parentElement.textContent.split("\n")[0]}: "${value}"\n`;
     })
     .join("");
 
