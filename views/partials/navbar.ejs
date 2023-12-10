@@ -1,7 +1,9 @@
-<nav>
-  <ul>
-    <% navbar.forEach(item => { %>
-      <li><a href="<%= item %>"><%= item %></a></li>
-    <% }); %>
-  </ul>
-</nav>
+<% if (navbar && navbar.size) { %>
+  <nav>
+    <ul>
+      <% navbar.forEach((value, key) => { %>
+        <li><a href="<%= value %>"><%= key %></a></li>
+      <% }); %>
+    </ul>
+  </nav>
+<% } %>

@@ -2,12 +2,25 @@
 const limit = 20;
 
 // Define navbar variables for different pages
-const navbarMainArr = ["guests", "api"];
-const navbarGuestsArr = ["home", "api"];
+const navbarMainMap = new Map([
+  ["guests", "/guests"],
+  ["api", "/api"],
+]);
+
+const navbarGuestsMap = new Map([
+  ["home", "/home"],
+  ["api", "/api"],
+]);
+
+const navbarApiMap = new Map([
+  ["home", "/home"],
+  ["guests", "/api/guests"],
+]);
 
 // Export functions/variables to use in other modules
 module.exports = {
   limit,
-  navbarMainArr,
-  navbarGuestsArr,
+  navbarMainMap,
+  navbarGuestsMap,
+  navbarApiMap,
 };
