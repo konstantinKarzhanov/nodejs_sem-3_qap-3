@@ -1,0 +1,1 @@
+SELECT * FROM view_guest_address ORDER BY guest_id DESC LIMIT 10;
