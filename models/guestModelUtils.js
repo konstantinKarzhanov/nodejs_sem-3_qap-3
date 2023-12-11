@@ -40,10 +40,7 @@ const buildUpdateGuestWithInsertAddressQuery = (guestArr, addressArr) => {
 
 // Define a function to build UPDATE query
 const buildUpdateGuestQuery = (arr) => {
-  const setClause = `${buildSetClauseArr(
-    arr.slice(1),
-    1
-  )}, last_update = NOW()`;
+  const setClause = `${buildSetClauseArr(arr, 1)}, last_update = NOW()`;
 
   // return query
   return `UPDATE guest SET ${setClause} WHERE guest_id = $1;`;

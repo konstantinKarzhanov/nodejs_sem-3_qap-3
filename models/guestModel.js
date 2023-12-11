@@ -88,7 +88,7 @@ const updateGuestAddress = async (
       ]);
     } else {
       if (keyGuestArr.length > 1) {
-        const updateGuestQuery = buildUpdateGuestQuery(keyGuestArr);
+        const updateGuestQuery = buildUpdateGuestQuery(keyGuestArr.slice(1));
         await client.query(updateGuestQuery, [...valueGuestArr]);
       }
 
