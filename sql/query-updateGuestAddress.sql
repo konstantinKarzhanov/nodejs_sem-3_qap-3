@@ -42,10 +42,12 @@ WHERE
 COMMIT;
 -- ROLLBACK;
 
+--------------------------------------------------------------------
 /*
  * This transaction is used when
  * we need just to update OLD address (we know that address exists)
  */
+--------------------------------------------------------------------
 
 BEGIN;
 
