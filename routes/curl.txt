@@ -1,20 +1,51 @@
-// curl commands for test purposes:
+GET request:
+curl http://localhost:3000/api/guests
 
-// GET request:
-// curl -H "Content-Type: application/json" http://localhost:3000/api/guests
 
-// POST request:
-// curl -X POST -d "guest_id=&guest_fname=postUrlencoded&guest_lname=curlTest&guest_dob=2023-12-07&guest_email=postUrlencoded&guest_phone=9&address_street=curlTest&address_city=curlTest&address_province=tt&address_postal_code=curlT" http://localhost:3000/api/guests
-// curl -X POST -H "Content-Type: application/json" -d '{"guest_id":"","guest_fname":"postJSON","guest_lname":"curlTest","guest_dob":"2023-12-07","guest_email":"postJSON","guest_phone":"9","address_street":"curlTest","address_city":"curlTest","address_province":"tt","address_postal_code":"curlT"}' http://localhost:3000/api/guests
+POST request:
+- urlencoded: 
+curl -X POST -d "guest_id=&guest_fname=postUrlEncTest1&guest_lname=test&guest_dob=2023-12-10&guest_email=posturlenctest1@test.com&guest_phone=1111111111&address_street=postUrlEncTest1&address_city=postUrlEncTest1&address_province=TT&address_postal_code=URLT1" http://localhost:3000/api/guests
 
-// PATCH request:
-// curl -X PATCH -d "guest_id=74&guest_fname=patchUrlencoded&guest_lname=updatedCurlTest&guest_dob=2023-12-07&guest_email=updatedCurlTest&guest_phone=1&address_street=updatedCurlTest&address_city=updatedCurlTest&address_province=tt&address_postal_code=curlB" http://localhost:3000/api/guests
-// curl -X PATCH -H "Content-Type: application/json" -d '{"guest_id":"74","guest_fname":"patchJSON","guest_lname":"updatedCurlTest","guest_dob":"2023-12-07","guest_email":"updatedCurlTest","guest_phone":"1","address_street":"curlTest","address_city":"curlTest","address_province":"tt","address_postal_code":"curlT"}' http://localhost:3000/api/guests
+- json:
+curl -X POST -H "Content-Type: application/json" -d '{"guest_id":"","guest_fname":"postJSONTest1","guest_lname":"test","guest_dob":"2023-12-10","guest_email":"postjson1@test.com","guest_phone":"1111111111","address_street":"postJSONTest1","address_city":"postJSONTest1","address_province":"TT","address_postal_code":"JSONT1"}' http://localhost:3000/api/guests
 
-// PUT request:
-// curl -X PUT -d "guest_id=74&guest_fname=putUrlencoded&guest_lname=updatedCurlTest&guest_dob=2023-12-07&guest_email=updatedCurlTest&guest_phone=1&address_street=updatedCurlTest&address_city=updatedCurlTest&address_province=tt&address_postal_code=curlB" http://localhost:3000/api/guests
-// curl -X PUT -H "Content-Type: application/json" -d '{"guest_id":"74","guest_fname":"putJSON","guest_lname":"updatedCurlTest","guest_dob":"2023-12-07","guest_email":"updatedCurlTest","guest_phone":"1","address_street":"curlTest","address_city":"curlTest","address_province":"tt","address_postal_code":"curlT"}' http://localhost:3000/api/guests
 
-// DELETE request:
-// curl -X DELETE -d "guest_lname=Fontell" http://localhost:3000/api/guests
-// curl -X DELETE -H "Content-Type: application/json" -d '{"guest_fname":"Vladamir"}' http://localhost:3000/api/guests
+DELETE request:
+- urlencoded: 
+curl -X DELETE -d "guest_lname=test" http://localhost:3000/api/guests
+
+- json:
+curl -X DELETE -H "Content-Type: application/json" -d '{"guest_fname": "postJSONTest1"}' http://localhost:3000/api/guests
+
+- by id:
+curl -X DELETE http://localhost:3000/api/guests/1
+
+
+PATCH request:
+- urlencoded by id: 
+curl -X PATCH -d "guest_fname=curlPatchTest&guest_lname=curlPatchTest" http://localhost:3000/api/guests/48
+
+- json by id:
+curl -X PATCH -H "Content-Type: application/json" -d '{"guest_fname":"patchJSONTest","guest_lname":"patchJSONTest","guest_dob":"2023-12-10","guest_email":"patchjson@test.com","guest_phone":"1234567890"}' http://localhost:3000/api/guests/48
+
+- json by id, updating address with creating NEW address: 
+curl -X PATCH -H "Content-Type: application/json" -d '{"guest_fname":"patchJSONTest1","guest_lname":"patchJSONTest","guest_dob":"2023-12-10","guest_email":"patchjson@test.com","guest_phone":"1234567890","address_street":"patchJSONTest","address_city":"patchJSONTest","address_province":"TT","address_postal_code":"patcht"}' http://localhost:3000/api/guests/48
+curl -X PATCH -H "Content-Type: application/json" -d '{"guest_fname":"patchJSONTest2","guest_lname":"patchJSONTest","guest_dob":"2023-12-10","guest_email":"patchjson2@test.com","guest_phone":"1234567890","address_street":"patchJSONTest2","address_city":"patchJSONTest2","address_province":"TT","address_postal_code":"patch2"}' http://localhost:3000/api/guests/47
+
+- json by id, updating OLD address without creating new: 
+curl -X PATCH -H "Content-Type: application/json" -d '{"address_street":"patchAddress","address_city":"patchAddress","address_province":"","address_postal_code":""}' http://localhost:3000/api/guests/48
+
+
+PUT request:
+- urlencoded by id: 
+curl -X PUT -d "guest_fname=curlPutTest&guest_lname=curlPutTest" http://localhost:3000/api/guests/3
+
+- json by id:
+curl -X PUT -H "Content-Type: application/json" -d '{"guest_fname":"putJSONTest","guest_lname":"putJSONTest","guest_dob":"2000-12-10","guest_email":"putjson@test.com","guest_phone":"1111111111"}' http://localhost:3000/api/guests/4
+
+- json by id, updating address with creating NEW address: 
+curl -X PUT -H "Content-Type: application/json" -d '{"guest_fname":"putJSONTest1","guest_lname":"putJSONTest","guest_dob":"2023-12-10","guest_email":"putjson@test.com","guest_phone":"2222222222","address_street":"putJSONTest1","address_city":"putJSONTest1","address_province":"TT","address_postal_code":"putte1"}' http://localhost:3000/api/guests/4
+curl -X PUT -H "Content-Type: application/json" -d '{"guest_fname":"putJSONTest2","guest_lname":"putJSONTest","guest_dob":"2023-12-10","guest_email":"putjson2@test.com","guest_phone":"3333333333","address_street":"putJSONTest2","address_city":"putJSONTest2","address_province":"TT","address_postal_code":"putte2"}' http://localhost:3000/api/guests/4
+
+- json by id, updating OLD address without creating new: 
+curl -X PUT -H "Content-Type: application/json" -d '{"address_street":"putUpdatedAddress","address_city":"putUpdatedAddress","address_province":"","address_postal_code":""}' http://localhost:3000/api/guests/4
