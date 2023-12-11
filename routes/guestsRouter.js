@@ -18,7 +18,7 @@ const guestsRouter = express.Router();
 guestsRouter
   .route("/")
   .get(getGuests, (req, res) => {
-    const data = res.data.map((item) => Object.values(item));
+    const data = res.data && res.data.map((item) => Object.values(item));
 
     const dataObj = {
       title: "Guests",
@@ -39,18 +39,30 @@ guestsRouter
     res.redirect("/guests");
   });
 
-guestsRouter.get("/:id", getGuestById, (req, res) => {
-  const data = res.data.map((item) => Object.values(item));
+// Set route handlers for named routes (parameters)
+guestsRouter
+  .route("/:id")
+  .get(getGuestById, (req, res) => {
+    const data = res.data && res.data.map((item) => Object.values(item));
 
-  const dataObj = {
-    title: "Guests",
-    h1Title: "Guests Page",
-    navbar: navbarGuestsMap,
-    data,
-  };
+    const dataObj = {
+      title: "Guests",
+      h1Title: "Guests Page",
+      navbar: navbarGuestsMap,
+      data,
+    };
 
-  res.render("guests", dataObj);
-});
+    res.render("guests", dataObj);
+  })
+  .post(postGuest, (req, res) => {
+    res.redirect("/guests");
+  })
+  .patch(updateGuest, (req, res) => {
+    res.redirect("/guests");
+  })
+  .delete(deleteGuest, (req, res) => {
+    res.redirect("/guests");
+  });
 
 // Export the router to use in other modules
 module.exports = guestsRouter;
