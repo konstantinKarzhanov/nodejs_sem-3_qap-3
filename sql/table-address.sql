@@ -1,3 +1,25 @@
+-- Table: public.address
+
+-- DROP TABLE IF EXISTS public.address;
+
+CREATE TABLE IF NOT EXISTS public.address
+(
+    address_id integer NOT NULL DEFAULT nextval('address_id_seq'::regclass),
+    address_street character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    address_city character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    address_province character varying(2) COLLATE pg_catalog."default" NOT NULL,
+    address_postal_code character varying(6) COLLATE pg_catalog."default" NOT NULL,
+    last_update timestamp with time zone NOT NULL DEFAULT now(),
+    CONSTRAINT address_pkey PRIMARY KEY (address_id),
+    CONSTRAINT uq_address UNIQUE (address_street, address_city, address_province),
+    CONSTRAINT uq_postal_code UNIQUE (address_postal_code)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.address
+    OWNER to postgres;
+
 -- ---------------------------
 -- queries for "address" table
 -- ---------------------------

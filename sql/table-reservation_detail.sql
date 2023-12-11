@@ -1,3 +1,33 @@
+-- Table: public.reservation_detail
+
+-- DROP TABLE IF EXISTS public.reservation_detail;
+
+CREATE TABLE IF NOT EXISTS public.reservation_detail
+(
+    reservation_id integer NOT NULL,
+    room_id integer NOT NULL,
+    check_in date NOT NULL,
+    check_out date NOT NULL,
+    night_count integer NOT NULL,
+    detail_cost real NOT NULL,
+    CONSTRAINT reservation_detail_pkey PRIMARY KEY (reservation_id, room_id),
+    CONSTRAINT uq_composite_key UNIQUE (reservation_id, room_id),
+    CONSTRAINT reservation_detail_reservation_id_fkey FOREIGN KEY (reservation_id)
+        REFERENCES public.reservation (reservation_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT reservation_detail_room_id_fkey FOREIGN KEY (room_id)
+        REFERENCES public.room (room_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.reservation_detail
+    OWNER to postgres;
+		
 -- ---------------------------------------
 -- queries for "reservation_detail" table
 -- ---------------------------------------

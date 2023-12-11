@@ -1,3 +1,32 @@
+-- Table: public.guest
+
+-- DROP TABLE IF EXISTS public.guest;
+
+CREATE TABLE IF NOT EXISTS public.guest
+(
+    guest_id integer NOT NULL DEFAULT nextval('guest_id_seq'::regclass),
+    address_id integer NOT NULL,
+    guest_fname character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    guest_lname character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    guest_dob character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    guest_email character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    guest_phone character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    last_update timestamp with time zone NOT NULL DEFAULT now(),
+    CONSTRAINT guest_pkey PRIMARY KEY (guest_id),
+    CONSTRAINT uq_email UNIQUE (guest_email),
+    CONSTRAINT uq_guest UNIQUE (guest_fname, guest_lname, guest_dob),
+    CONSTRAINT guest_address_id_fkey FOREIGN KEY (address_id)
+        REFERENCES public.address (address_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.guest
+    OWNER to postgres;
+		
 -- ---------------------------
 -- queries for "guest" table
 -- ---------------------------

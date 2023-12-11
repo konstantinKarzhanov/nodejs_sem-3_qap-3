@@ -1,3 +1,29 @@
+-- Table: public.room
+
+-- DROP TABLE IF EXISTS public.room;
+
+CREATE TABLE IF NOT EXISTS public.room
+(
+    room_id integer NOT NULL DEFAULT nextval('room_id_seq'::regclass),
+    hotel_id integer NOT NULL,
+    room_type character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    room_capacity integer NOT NULL,
+    room_description character varying(300) COLLATE pg_catalog."default" NOT NULL,
+    room_cost_night real NOT NULL,
+    room_status character varying(10) COLLATE pg_catalog."default" NOT NULL DEFAULT 'Available'::character varying,
+    last_update timestamp with time zone NOT NULL DEFAULT now(),
+    CONSTRAINT room_pkey PRIMARY KEY (room_id),
+    CONSTRAINT room_hotel_id_fkey FOREIGN KEY (hotel_id)
+        REFERENCES public.hotel (hotel_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.room
+    OWNER to postgres;
+		
 -- ---------------------------
 -- queries for "room" table
 -- ---------------------------

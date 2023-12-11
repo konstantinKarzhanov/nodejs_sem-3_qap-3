@@ -1,3 +1,37 @@
+-- Table: public.reservation
+
+-- DROP TABLE IF EXISTS public.reservation;
+
+CREATE TABLE IF NOT EXISTS public.reservation
+(
+    reservation_id integer NOT NULL DEFAULT nextval('reservation_id_seq'::regclass),
+    hotel_id integer NOT NULL DEFAULT 1,
+    guest_id integer,
+    reservation_date date NOT NULL DEFAULT CURRENT_DATE,
+    subtotal_cost real NOT NULL,
+    discount real NOT NULL,
+    tax_amount real NOT NULL,
+    total_cost real NOT NULL,
+    payment_method character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    last_update timestamp with time zone NOT NULL DEFAULT now(),
+    CONSTRAINT reservation_pkey PRIMARY KEY (reservation_id),
+    CONSTRAINT reservation_guest_id_fkey FOREIGN KEY (guest_id)
+        REFERENCES public.guest (guest_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT reservation_hotel_id_fkey FOREIGN KEY (hotel_id)
+        REFERENCES public.hotel (hotel_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.reservation
+    OWNER to postgres;
+		
 -- --------------------------------
 -- queries for "reservation" table
 -- --------------------------------
