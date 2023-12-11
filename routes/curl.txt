@@ -1,15 +1,18 @@
+------------
 GET request:
+------------
 curl http://localhost:3000/api/guests
-
-
+-------------
+-------------
 POST request:
+
 - urlencoded: 
 curl -X POST -d "guest_id=&guest_fname=postUrlEncTest1&guest_lname=test&guest_dob=2023-12-10&guest_email=posturlenctest1@test.com&guest_phone=1111111111&address_street=postUrlEncTest1&address_city=postUrlEncTest1&address_province=TT&address_postal_code=URLT1" http://localhost:3000/api/guests
 
 - json:
 curl -X POST -H "Content-Type: application/json" -d '{"guest_id":"","guest_fname":"postJSONTest1","guest_lname":"test","guest_dob":"2023-12-10","guest_email":"postjson1@test.com","guest_phone":"1111111111","address_street":"postJSONTest1","address_city":"postJSONTest1","address_province":"TT","address_postal_code":"JSONT1"}' http://localhost:3000/api/guests
-
-
+---------------
+---------------
 DELETE request:
 - urlencoded: 
 curl -X DELETE -d "guest_lname=test" http://localhost:3000/api/guests
@@ -19,8 +22,8 @@ curl -X DELETE -H "Content-Type: application/json" -d '{"guest_fname": "postJSON
 
 - by id:
 curl -X DELETE http://localhost:3000/api/guests/1
-
-
+--------------
+--------------
 PATCH request:
 - urlencoded by id: 
 curl -X PATCH -d "guest_fname=curlPatchTest&guest_lname=curlPatchTest" http://localhost:3000/api/guests/48
@@ -34,8 +37,8 @@ curl -X PATCH -H "Content-Type: application/json" -d '{"guest_fname":"patchJSONT
 
 - json by id, updating OLD address without creating new: 
 curl -X PATCH -H "Content-Type: application/json" -d '{"address_street":"patchAddress","address_city":"patchAddress","address_province":"","address_postal_code":""}' http://localhost:3000/api/guests/48
-
-
+------------
+------------
 PUT request:
 - urlencoded by id: 
 curl -X PUT -d "guest_fname=curlPutTest&guest_lname=curlPutTest" http://localhost:3000/api/guests/3

@@ -143,6 +143,7 @@ const deleteGuestNullReservation = async (keyArr, valueArr) => {
   }
 };
 
+// Export functions/variables to use in other modules
 module.exports = {
   createGuestAddress,
   updateGuestAddress,

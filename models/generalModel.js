@@ -29,20 +29,6 @@ const readDataById = async (table, idColumn, id) => {
   }
 };
 
-// // Define a function to add new data to the database
-// const createData = async (table, keyArr, valueArr) => {
-//   const query = `INSERT INTO ${table}(${keyArr}) VALUES (${valueArr.map(
-//     (_, index) => "$" + (index + 1)
-//   )});`;
-
-//   try {
-//     await pool.query(query, [...valueArr]);
-//   } catch (err) {
-//     console.log(err.message);
-//     throw err;
-//   }
-// };
-
 // Export functions/variables to use in other modules
 module.exports = {
   readData,

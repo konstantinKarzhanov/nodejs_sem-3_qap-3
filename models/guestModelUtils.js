@@ -101,6 +101,7 @@ const buildDeleteGuestQuery = (keyArr, valueArr) => {
   return query;
 };
 
+// Export functions/variables to use in other modules
 module.exports = {
   buildUpdateGuestWithInsertAddressQuery,
   buildUpdateGuestQuery,
