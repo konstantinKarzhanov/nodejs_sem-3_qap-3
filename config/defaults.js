@@ -17,10 +17,17 @@ const navbarApiMap = new Map([
   ["guests", "/api/guests"],
 ]);
 
+const navbarNotFoundMap = new Map([
+  ["home", "/home"],
+  ["guests", "/guests"],
+  ["api", "/api"],
+]);
+
 // Export functions/variables to use in other modules
 module.exports = {
   limit,
   navbarMainMap,
   navbarGuestsMap,
   navbarApiMap,
+  navbarNotFoundMap,
 };

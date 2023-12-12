@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const indexRouter = require("./routes/indexRouter");
 const apiIndexRouter = require("./routes/apiIndexRouter");
 const guestsRouter = require("./routes/guestsRouter");
+const notFoundRouter = require("./routes/notFoundRouter");
 
 // Set app
 const app = express();
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", indexRouter);
 app.use("/api", apiIndexRouter);
 app.use("/guests", guestsRouter);
+app.use("/*", notFoundRouter);
 
 // Start the server
 app.listen(PORT, console.log(`Server is listening on port: ${PORT}`));
